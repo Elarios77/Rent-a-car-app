@@ -1,4 +1,4 @@
-package com.example.rentacarapp.di
+package com.example.rentacarapp.di.modules
 
 import com.example.rentacarapp.BuildConfig
 import com.example.rentacarapp.framework.api.CarApiService

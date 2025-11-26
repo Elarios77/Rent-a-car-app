@@ -1,7 +1,7 @@
 package com.example.rentacarapp.data.mapper
 
 import com.example.rentacarapp.domain.model.CarRentItem
-import com.example.rentacarapp.framework.CarDto
+import com.example.rentacarapp.framework.dto.CarDto
 import javax.inject.Inject
 
 class CarDtoMapper @Inject constructor() {

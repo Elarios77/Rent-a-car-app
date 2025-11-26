@@ -1,4 +1,4 @@
-package com.example.rentacarapp.framework
+package com.example.rentacarapp.framework.dto
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

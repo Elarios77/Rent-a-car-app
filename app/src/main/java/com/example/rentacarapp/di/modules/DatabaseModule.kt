@@ -1,8 +1,7 @@
-package com.example.rentacarapp.di
+package com.example.rentacarapp.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.example.rentacarapp.framework.AppDatabase
 import com.example.rentacarapp.framework.dao.CarDao
 import dagger.Module

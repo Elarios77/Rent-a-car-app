@@ -1,5 +1,4 @@
-package com.example.rentacarapp.data
-
+package com.example.rentacarapp.data.carsrepository
 
 import com.example.rentacarapp.data.datasource.LocalDataSource
 import com.example.rentacarapp.data.datasource.RemoteDataSource
@@ -16,7 +15,7 @@ class CarsRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val dtoMapper: CarDtoMapper,
     private val entityMapper: CarEntityMapper
-): CarsRepository{
+): CarsRepository {
     override suspend fun fetchCarSpecs(existingCar: CarRentItem): CarRentItem {
         val dto = remoteDataSource.getCarSpecs(make = existingCar.make, model = existingCar.model)
         return dtoMapper(dto,existingCar)
@@ -46,7 +45,6 @@ class CarsRepositoryImpl @Inject constructor(
             localDataSource.deleteRental(entity)
         }
     }
-
 
     override suspend fun getRentalById(id: String): CarRentItem? {
         val entity = localDataSource.getRentalById(id)

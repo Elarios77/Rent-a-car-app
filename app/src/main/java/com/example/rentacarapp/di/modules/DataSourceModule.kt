@@ -1,4 +1,4 @@
-package com.example.rentacarapp.di
+package com.example.rentacarapp.di.modules
 
 import com.example.rentacarapp.data.datasource.LocalDataSource
 import com.example.rentacarapp.data.datasource.RemoteDataSource

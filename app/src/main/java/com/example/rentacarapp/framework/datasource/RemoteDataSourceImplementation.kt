@@ -1,7 +1,7 @@
 package com.example.rentacarapp.framework.datasource
 
 import com.example.rentacarapp.data.datasource.RemoteDataSource
-import com.example.rentacarapp.framework.CarDto
+import com.example.rentacarapp.framework.dto.CarDto
 import com.example.rentacarapp.framework.api.CarApiService
 import javax.inject.Inject
 

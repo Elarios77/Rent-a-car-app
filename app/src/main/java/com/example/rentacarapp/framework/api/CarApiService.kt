@@ -1,6 +1,6 @@
 package com.example.rentacarapp.framework.api
 
-import com.example.rentacarapp.framework.CarDto
+import com.example.rentacarapp.framework.dto.CarDto
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header

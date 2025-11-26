@@ -1,6 +1,6 @@
 package com.example.rentacarapp.data.datasource
 
-import com.example.rentacarapp.framework.CarDto
+import com.example.rentacarapp.framework.dto.CarDto
 
 interface RemoteDataSource {
 
