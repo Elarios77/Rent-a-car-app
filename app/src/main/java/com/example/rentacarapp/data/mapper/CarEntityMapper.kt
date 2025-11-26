@@ -1,6 +1,6 @@
 package com.example.rentacarapp.data.mapper
 
-import com.example.rentacarapp.data.CarEntity
+import com.example.rentacarapp.data.entity.CarEntity
 import com.example.rentacarapp.domain.model.CarRentItem
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class CarEntityMapper @Inject constructor() {
     }
 
     //Reverse Mapping
-    operator fun invoke(item: CarRentItem?,days: Int): CarEntity?{
+    operator fun invoke(item: CarRentItem?,days: Int=0): CarEntity?{
         if(item==null)return null
         return CarEntity(
             id = item.id,

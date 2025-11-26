@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.rentacarapp.data.CarEntity
+import com.example.rentacarapp.data.entity.CarEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

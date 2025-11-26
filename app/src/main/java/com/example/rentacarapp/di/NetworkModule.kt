@@ -1,7 +1,7 @@
 package com.example.rentacarapp.di
 
 import com.example.rentacarapp.BuildConfig
-import com.example.rentacarapp.framework.CarApiService
+import com.example.rentacarapp.framework.api.CarApiService
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module

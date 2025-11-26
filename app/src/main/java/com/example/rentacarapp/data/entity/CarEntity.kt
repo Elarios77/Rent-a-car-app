@@ -1,4 +1,4 @@
-package com.example.rentacarapp.data
+package com.example.rentacarapp.data.entity
 
 import androidx.annotation.DrawableRes
 import androidx.room.Entity
