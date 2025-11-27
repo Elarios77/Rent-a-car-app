@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RentACarApp</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="signIn">Sing in to continue</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signIn_Footer"> Sign in</string>
 </resources>
