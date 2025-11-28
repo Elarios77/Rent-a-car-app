@@ -20,7 +20,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -45,6 +47,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -61,8 +64,6 @@ fun LoginScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    val scrollState = rememberScrollState()
-
     LaunchedEffect(uiState.success) {
         if(uiState.success){
             Toast.makeText(context,"Successful connection", Toast.LENGTH_SHORT).show()
@@ -71,14 +72,31 @@ fun LoginScreen(
         }
     }
 
+    LoginScreenContent(
+        uiState = uiState,
+        onEmailChange = viewModel::onEmailChanged,
+        onPasswordChange = viewModel::onPasswordChanged,
+        onLoginClick = viewModel::onLoginClicked
+    )
+}
+
+@Composable
+fun LoginScreenContent(
+    uiState: LoginUiState,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+    onLoginClick: () -> Unit
+){
+    val scrollState = rememberScrollState()
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Image(
-            painter = painterResource(R.drawable.car_login_screen2),
+            painter = painterResource(R.drawable.car_login_screen3),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier.blur(
-                radiusX = 2.dp,
-                radiusY = 2.dp
+                radiusX = 3.dp,
+                radiusY = 3.dp
             )
         )
         Column(modifier = Modifier.fillMaxSize()
@@ -86,7 +104,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center){
             Box(modifier = Modifier.padding(8.dp)
-                .alpha(0.7f)
+                .alpha(0.8f)
                 .clip(
                     CutCornerShape(
                         topStart = 10.dp,
@@ -106,15 +124,16 @@ fun LoginScreen(
                     Spacer(modifier = Modifier.height(20.dp))
                     LoginFields(
                         uiState = uiState,
-                        onEmailChange = viewModel::onEmailChanged,
-                        onPasswordChange = viewModel::onPasswordChanged,
-                        onLoginClick = viewModel::onLoginClicked
+                        onEmailChange = onEmailChange,
+                        onPasswordChange = onPasswordChange,
+                        onLoginClick = onLoginClick
                     )
 
                 }
             }
         }
     }
+
 }
 
 @Composable
@@ -123,11 +142,11 @@ fun LoginHeader(){
         Text(text = stringResource(R.string.welcome_back),
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = Color.DarkGray)
+            color = Color.Black)
         Text(text = stringResource(R.string.signIn),
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.DarkGray)
+            color = Color.Black)
     }
 }
 
@@ -170,11 +189,20 @@ fun LoginFields(
             ),
             shape = RoundedCornerShape(12.dp),
             leadingIcon = {
-                Icon(Icons.Default.Email,contentDescription = null)
+                Icon(Icons.Default.Lock,contentDescription = null)
             }
         )
         Spacer(modifier = Modifier.height(24.dp))
 
+        if(uiState.errorMessage != null){
+            Text(
+                text = uiState.errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+        }
         if(uiState.isLoading){
             CircularProgressIndicator()
         }else{
@@ -182,14 +210,34 @@ fun LoginFields(
                 onClick = onLoginClick,
                 modifier = Modifier.fillMaxWidth()
                     .height(50.dp),
-                shape = RoundedCornerShape(12.dp)
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF0e72a6),
+                    contentColor = Color.White
+                )
             ) {
-                Text(text = stringResource(R.string.signIn_Footer))
+                Text(text = stringResource(R.string.signIn_Footer),
+                    fontSize = 17.sp,
+                    fontWeight = FontWeight.Bold)
             }
         }
-
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview(){
+    val state = LoginUiState(
+        email = "example@test.com",
+        password = "123",
+        isLoading = false
+    )
 
+    LoginScreenContent(
+        uiState = state,
+        onEmailChange = {},
+        onPasswordChange = {},
+        onLoginClick = {}
+    )
+}
 

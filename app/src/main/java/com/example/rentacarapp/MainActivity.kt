@@ -6,17 +6,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.rentacarapp.ui.login.screen.LoginScreen
 import com.example.rentacarapp.ui.theme.RentACarAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             RentACarAppTheme {
-                LoginScreen(
-                    viewModel = TODO(),
-                    onLoginSuccess = TODO()
-                )
+                LoginScreen(onLoginSuccess = {println("navigate to next screen")})
             }
         }
     }

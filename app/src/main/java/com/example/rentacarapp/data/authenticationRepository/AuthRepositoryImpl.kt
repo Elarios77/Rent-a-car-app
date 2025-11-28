@@ -1,6 +1,5 @@
 package com.example.rentacarapp.data.authenticationRepository
 
-import androidx.compose.ui.graphics.RectangleShape
 import com.example.rentacarapp.domain.repository.AuthRepository
 import kotlinx.coroutines.delay
 import javax.inject.Inject

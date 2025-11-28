@@ -10,10 +10,6 @@ class CustomerLoginUseCase @Inject constructor(
         if(email.isBlank() || password.isBlank()){
             return Result.failure(Exception("Fields cannot be empty"))
         }
-        val emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$".toRegex()
-        if(!email.matches(emailRegex)){
-            return Result.failure(Exception("Form is incorrect"))
-        }
         return repository.login(email,password)
     }
 }
