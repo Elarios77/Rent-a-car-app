@@ -51,7 +51,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.example.rentacarapp.R
 import com.example.rentacarapp.ui.login.viewmodel.LoginUiState
 import com.example.rentacarapp.ui.login.viewmodel.LoginViewModel

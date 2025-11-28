@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CarRental
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -20,8 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.rentacarapp.R
 import com.example.rentacarapp.ui.cars.screen.HistoryScreen
 import com.example.rentacarapp.ui.cars.screen.MainScreen
@@ -45,7 +48,11 @@ fun TabsDashboard() {
             containerColor = Color(0xFF0e72a6),
             contentColor = Color.White,
             indicator = {},
-            divider = {}
+            divider = {
+                HorizontalDivider(thickness = 3.dp,
+                    color = Color(0xFF084A6E)
+                )
+            }
         ){
             tabTitles.forEachIndexed{ index, tab ->
                 val selected = pagerState.currentPage == index

@@ -9,4 +9,7 @@
     <string name="main">Main</string>
     <string name="rent">Rent</string>
     <string name="history">History</string>
+    <string name="company_Name">FlexDrive</string>
+    <string name="slogan">Drive on your terms</string>
+    <string name="subslogan">Drive on your terms.</string>
 </resources>
