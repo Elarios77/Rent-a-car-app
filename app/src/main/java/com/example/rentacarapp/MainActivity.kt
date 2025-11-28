@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.rentacarapp.ui.login.screen.LoginScreen
+import com.example.rentacarapp.ui.navigation.AppNavigation
 import com.example.rentacarapp.ui.theme.RentACarAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RentACarAppTheme {
-                LoginScreen(onLoginSuccess = {println("navigate to next screen")})
+                AppNavigation()
             }
         }
     }

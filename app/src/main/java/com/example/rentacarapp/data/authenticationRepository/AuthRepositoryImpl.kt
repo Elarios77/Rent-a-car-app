@@ -10,7 +10,7 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository {
         password: String
     ): Result<Unit> {
         delay(1000L)
-        val validEmail = "user@gmail.xom"
+        val validEmail = "user@gmail.com"
         val validPass = "user1234"
 
         return if(email == validEmail && password == validPass){

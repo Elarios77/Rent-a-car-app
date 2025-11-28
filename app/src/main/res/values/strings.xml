@@ -5,4 +5,8 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="signIn_Footer"> Sign in</string>
+    <string name="loginScreen">Login screen</string>
+    <string name="main">Main</string>
+    <string name="rent">Rent</string>
+    <string name="history">History</string>
 </resources>
