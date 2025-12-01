@@ -10,8 +10,12 @@ class CarDtoMapper @Inject constructor() {
         if(dto==null)return existingCar
         return existingCar.copy(
             year = dto.year,
-            fuelType = dto.fuelType,
-            transmission = dto.transmission
+            fuelType = dto.fuelType?.replaceFirstChar{it.uppercase()}?:"N/A",
+            transmission = when(dto.transmission){
+                "a" -> "Automatic"
+                "m" -> "Manual"
+                else -> dto.transmission ?:"N/A"
+            }
         )
     }
 }

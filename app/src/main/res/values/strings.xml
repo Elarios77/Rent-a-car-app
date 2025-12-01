@@ -28,4 +28,6 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="phone">+30 210 12345</string>
     <string name="email_flexdrive">support@flexDrive</string>
     <string name="location">Athens</string>
+    <string name="totalPrice">Total Price</string>
+    <string name="rentNow">RENT NOW</string>
 </resources>

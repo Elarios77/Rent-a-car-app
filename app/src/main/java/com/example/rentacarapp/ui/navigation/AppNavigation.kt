@@ -10,7 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.rentacarapp.R
-import com.example.rentacarapp.ui.cars.tabs.TabsDashboard
+import com.example.rentacarapp.ui.tabs.TabsDashboard
 import com.example.rentacarapp.ui.login.screen.LoginScreen
 
 enum class LoginNavigation(@StringRes val title : Int){
