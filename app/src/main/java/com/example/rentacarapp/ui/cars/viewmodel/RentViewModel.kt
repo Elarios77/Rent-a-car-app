@@ -90,16 +90,16 @@ class RentViewModel @Inject constructor(
 
     fun onDaysChange(newDays:Int){
         if(newDays < 1)return
-
+        val finalDays = if(newDays > 31) 1 else newDays
         val currentExpandedId = _uiState.value.expandedCarId
         val currentCar = _uiState.value.cars.find { it.id == currentExpandedId }
 
         if(currentCar != null){
-            val newtotal = currentCar.price * newDays
+            val newtotal = currentCar.price * finalDays
 
             _uiState.update {
                 it.copy(
-                    selectedDays = newDays,
+                    selectedDays = finalDays,
                     currentTotalCost = newtotal
                 )
             }
