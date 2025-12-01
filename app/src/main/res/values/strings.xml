@@ -16,7 +16,7 @@
     <string name="About_body">Established in 2015, FlexDrive was born from a simple vision: to redefine mobility. We believe that renting a car should be as flexible and dynamic as your lifestyle.
 What started as a local passion project has evolved into a leading rental service, trusted by thousands for offering freedom without the hassle.</string>
     <string name="vision_header">The FlexDrive Promise</string>
-    <string name="vision_body">We do not just hand over keys; we unlock experiences. Whether you need a city car for a day or a luxury SUV for a month, FlexDrive adapts to your needs.With transparent pricing, zero hidden fees, and 24/7 support, we ensure that your only focus is the road ahead.</string>
+    <string name="vision_body">We do not just hand over keys; we unlock experiences. Whether you need a city car for a day or a luxury SUV for a month, FlexDrive adapts to your needs. With transparent pricing, zero hidden fees, and 24/7 support, we ensure that your only focus is the road ahead.</string>
     <string name="why_to_choose">Why Choose us</string>
     <string name="features1_title">Trusted</string>
     <string name="features1_body">Rated 5/5 stars</string>
@@ -24,4 +24,8 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="features2_body">Rent by day, week or month</string>
     <string name="features3_title">Customer First</string>
     <string name="features3_body">24/7 Support</string>
+    <string name="contact">Contact Details</string>
+    <string name="phone">+30 210 12345</string>
+    <string name="email_flexdrive">support@flexDrive</string>
+    <string name="location">Athens</string>
 </resources>

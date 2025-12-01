@@ -13,15 +13,20 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCarFilled
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Mail
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.SupportAgent
 import androidx.compose.material.icons.filled.VerifiedUser
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -60,10 +65,6 @@ fun MainScreen() {
 
                         )
                 ),
-
-
-
-
             contentAlignment = Alignment.Center
         )
         {
@@ -115,6 +116,29 @@ fun MainScreen() {
                 modifier = Modifier.padding(bottom = 12.dp,start = 4.dp))
 
             FeatureRow(icon = Icons.Default.VerifiedUser,title = stringResource(R.string.features1_title),body = stringResource(R.string.features1_body))
+            FeatureRow(icon = Icons.Default.Schedule,title = stringResource(R.string.features2_title),body = stringResource(R.string.features2_body))
+            FeatureRow(icon = Icons.Default.SupportAgent,title = stringResource(R.string.features3_title), body = stringResource(R.string.features3_body))
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Card(
+                colors = CardDefaults.cardColors(containerColor = colorResource(R.color.darker_mainColor)),
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Text(text = stringResource(R.string.contact),
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ContactRow(icon = Icons.Default.Phone,text = stringResource(R.string.phone))
+                    ContactRow(icon = Icons.Default.Mail, text = stringResource(R.string.email_flexdrive))
+                    ContactRow(icon = Icons.Default.LocationOn, text = stringResource(R.string.location))
+                }
+            }
         }
     }
 }
@@ -153,8 +177,40 @@ fun FeatureRow(icon : ImageVector,title: String,body: String){
         .background(Color.White,RoundedCornerShape(12.dp))
         .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically) {
-
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = colorResource(R.color.mainColor),
+            modifier = Modifier.size(28.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column{
+            Text(text = title,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = colorResource(R.color.darker_mainColor))
+            Text(text = body,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 14.sp,
+                color = colorResource(R.color.darker_mainColor))
+        }
     }
+}
+
+@Composable
+fun ContactRow(icon: ImageVector,text: String){
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 6.dp)){
+        Icon(imageVector = icon,
+            contentDescription = null,
+            tint = Color.LightGray,
+            modifier = Modifier.size(20.dp))
+        Spacer(modifier = Modifier.width(12.dp))
+        Text(text = text ,
+            color = Color.White,
+            fontSize = 14.sp)
+    }
+
 }
 
 @Preview
