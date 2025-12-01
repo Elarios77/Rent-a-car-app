@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,9 +14,15 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsCarFilled
+import androidx.compose.material.icons.filled.VerifiedUser
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,10 +30,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +60,10 @@ fun MainScreen() {
 
                         )
                 ),
+
+
+
+
             contentAlignment = Alignment.Center
         )
         {
@@ -84,11 +97,63 @@ fun MainScreen() {
         Column(
             modifier = Modifier
                 .padding(20.dp)
-                .offset(y = (-30).dp)
+                .offset(y = (-30).dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         )
         {
+            InfoCard(title = stringResource(R.string.About_header),
+                content = stringResource(R.string.About_body))
+            Spacer(modifier = Modifier.padding(20.dp))
+            InfoCard(title = stringResource(R.string.vision_header),
+                content = stringResource(R.string.vision_body))
+            Spacer(modifier = Modifier.padding(20.dp))
+            Text(text = stringResource(R.string.why_to_choose),
+                fontSize = 20.sp,
+                fontWeight = FontWeight.ExtraBold,
+                color = colorResource(R.color.darker_mainColor),
+                modifier = Modifier.padding(bottom = 12.dp,start = 4.dp))
 
+            FeatureRow(icon = Icons.Default.VerifiedUser,title = stringResource(R.string.features1_title),body = stringResource(R.string.features1_body))
         }
+    }
+}
+
+@Composable
+fun InfoCard(title:String,content: String){
+    Card(elevation = CardDefaults.cardElevation(
+        defaultElevation = 8.dp),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+    ) {
+        Column(modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = title,
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color =colorResource(R.color.mainColor),)
+            HorizontalDivider(thickness = 2.dp,
+                color = Color.LightGray)
+            Spacer(modifier = Modifier.padding(8.dp))
+            Text(text = content,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colorResource(R.color.mainColor),
+                textAlign = TextAlign.Justify)
+        }
+    }
+}
+
+@Composable
+fun FeatureRow(icon : ImageVector,title: String,body: String){
+    Row(modifier = Modifier.fillMaxWidth()
+        .padding(vertical = 8.dp)
+        .background(Color.White,RoundedCornerShape(12.dp))
+        .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+
     }
 }
 
