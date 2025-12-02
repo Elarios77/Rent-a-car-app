@@ -2,7 +2,6 @@ package com.example.rentacarapp.di.modules
 
 import com.example.rentacarapp.BuildConfig
 import com.example.rentacarapp.framework.api.CarApiService
-import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -26,7 +25,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideMoshi(): Moshi {
-        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+        return Moshi.Builder().build()
     }
 
     @Provides
@@ -35,7 +34,6 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient{
         val okHttpClient =  OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
             .connectTimeout(30,TimeUnit.SECONDS)
             .writeTimeout(30,TimeUnit.SECONDS)
             .readTimeout(30,TimeUnit.SECONDS)

@@ -14,25 +14,19 @@ class CarEntityMapper @Inject constructor() {
             model = entity.model,
             imageResourceId = entity.imageResourceId,
             price = entity.price,
-            year = entity.year,
-            fuelType = entity.fuelType,
-            transmission = entity.transmission
+            year = null,
+            fuelType = null,
+            transmission = null
         )
     }
 
     //Reverse Mapping
-    operator fun invoke(item: CarRentItem?,days: Int=0): CarEntity?{
-        if(item==null)return null
+    operator fun invoke(item: CarRentItem,days: Int=0): CarEntity{
         return CarEntity(
-            id = item.id,
             make = item.make,
             model = item.model,
             imageResourceId = item.imageResourceId,
             price =item.price*days,
-            year = item.year ?: 2024,
-            fuelType = item.fuelType ?: "N/A",
-            transmission = item.transmission?:"Automatic",
-            days = days,
             date = System.currentTimeMillis()
         )
     }
