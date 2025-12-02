@@ -6,10 +6,10 @@ import javax.inject.Inject
 class CustomerLoginUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    suspend operator fun invoke(email:String,password: String): Result<Unit>{
-        if(email.isBlank() || password.isBlank()){
+    suspend operator fun invoke(email: String, password: String): Result<Unit> {
+        if (email.isBlank() || password.isBlank()) {
             return Result.failure(Exception("Fields cannot be empty"))
         }
-        return repository.login(email,password)
+        return repository.login(email, password)
     }
 }

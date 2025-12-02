@@ -19,28 +19,28 @@ import javax.inject.Inject
 class RentViewModel @Inject constructor(
     private val fetchCarSpecsUseCase: FetchCarSpecsUseCase,
     private val rentCarUseCase: RentCarUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RentUiState())
     val uiState: StateFlow<RentUiState> = _uiState.asStateFlow()
 
-    init{
+    init {
         loadCars()
     }
 
-    private fun loadCars(){
+    private fun loadCars() {
         val initialCars = listOf(
             CarRentItem(
                 make = "Toyota",
                 model = "Yaris",
                 imageResourceId = R.drawable.yaris,
-                price = 35.0
+                price = 50.0
             ),
             CarRentItem(
                 make = "Renault",
                 model = "Clio",
                 imageResourceId = R.drawable.clio,
-                price = 40.0
+                price = 57.0
             ),
             CarRentItem(
                 make = "Opel",
@@ -52,74 +52,97 @@ class RentViewModel @Inject constructor(
                 make = "Audi",
                 model = "RS Q8",
                 imageResourceId = R.drawable.rsq8,
-                price = 250.0
+                price = 320.0
             ),
             CarRentItem(
                 make = "Lexus",
                 model = "GX 460",
                 imageResourceId = R.drawable.lexusgx460,
-                price = 180.0
+                price = 244.0
             )
         )
         _uiState.update { it.copy(cars = initialCars) }
     }
 
-    fun onToggleCarExpand(car: CarRentItem){
+    fun onToggleCarExpand(car: CarRentItem) {
         val isExpanded = _uiState.value.expandedCarId == car.id
-        if(isExpanded){
-            _uiState.update { it.copy(expandedCarId = null, selectedDays = 1, currentTotalCost = 0.0) }
-        }else{
-            _uiState.update { it.copy(expandedCarId = car.id, selectedDays = 1,
-                currentTotalCost = car.price) }
+        if (isExpanded) {
+            _uiState.update {
+                it.copy(
+                    expandedCarId = null, selectedDays = 1, currentTotalCost = 0.0,
+                    dateSelectionStart = null, dateSelectionEnd = null
+                )
+            }
+        } else {
+            _uiState.update {
+                it.copy(
+                    expandedCarId = car.id, selectedDays = 1,
+                    currentTotalCost = car.price, dateSelectionStart = null, dateSelectionEnd = null
+                )
+            }
             fetchSpecsForCar(car)
         }
     }
 
-    private fun fetchSpecsForCar(car: CarRentItem){
-        if(car.year!=null) return
+    private fun fetchSpecsForCar(car: CarRentItem) {
+        if (car.year != null) return
         viewModelScope.launch {
             val updatedCar = fetchCarSpecsUseCase(car)
             _uiState.update { state ->
                 val newCarList = state.cars.map {
-                    if(it.id == car.id) updatedCar else it
+                    if (it.id == car.id) updatedCar else it
                 }
                 state.copy(cars = newCarList)
             }
         }
     }
 
-    fun onDaysChange(newDays:Int){
-        if(newDays < 1)return
-        val finalDays = if(newDays > 31) 1 else newDays
+    fun toggleDatePicker(show:Boolean){
+        _uiState.update { it.copy(isDatePickerVisible = show) }
+    }
+
+    fun onDaysSelected(startMillis:Long? , endMillis:Long?) {
+        if (startMillis==null) return
+        val finalEnd = endMillis ?:startMillis
+        val difference = finalEnd - startMillis
+        val days = java.util.concurrent.TimeUnit.MILLISECONDS.toDays(difference).toInt()+1
         val currentExpandedId = _uiState.value.expandedCarId
         val currentCar = _uiState.value.cars.find { it.id == currentExpandedId }
 
-        if(currentCar != null){
-            val newtotal = currentCar.price * finalDays
+        val pricePerDay = currentCar?.price?:0.0
 
-            _uiState.update {
-                it.copy(
-                    selectedDays = finalDays,
-                    currentTotalCost = newtotal
-                )
-            }
+        _uiState.update {
+            it.copy(
+                selectedDays = days,
+                currentTotalCost = pricePerDay * days,
+                dateSelectionStart = startMillis,
+                dateSelectionEnd = finalEnd,
+                isDatePickerVisible = false
+
+            )
         }
     }
 
-    fun onRentClick(car: CarRentItem){
+    fun onRentClick(car: CarRentItem) {
         val days = _uiState.value.selectedDays
         _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
-            try{
-                rentCarUseCase(car,days)
-                _uiState.update { it.copy(isLoading = false, rentSuccess = true, expandedCarId = null) }
-            }catch (e: Exception){
+            try {
+                rentCarUseCase(car, days)
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        rentSuccess = true,
+                        expandedCarId = null
+                    )
+                }
+            } catch (e: Exception) {
                 _uiState.update { it.copy(isLoading = false, error = e.message) }
             }
         }
     }
 
-    fun resetMessages(){
-        _uiState.update { it.copy(error = null , rentSuccess = false) }
+    fun resetMessages() {
+        _uiState.update { it.copy(error = null, rentSuccess = false) }
     }
 }

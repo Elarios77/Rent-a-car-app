@@ -3,7 +3,6 @@ package com.example.rentacarapp.ui.cars.screen
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,14 +13,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalGasStation
-import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.SettingsSuggest
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -30,8 +27,8 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -59,7 +56,7 @@ fun CarItemCard(
     selectedDays: Int,
     currentTotalCost: Double,
     onExpandClick: () -> Unit,
-    onDaysChange: (Int) -> Unit,
+    onDateClick: () -> Unit,
     onRentClick: () -> Unit
 ) {
 
@@ -148,48 +145,24 @@ fun CarItemCard(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            Row(
+            OutlinedButton(
+                onClick = onDateClick,
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text(text = "Duration:",
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.DarkGray)
-                Row(verticalAlignment = Alignment.CenterVertically){
-                    IconButton(
-                        onClick = {onDaysChange(selectedDays - 1)},
-                        modifier = Modifier.size(32.dp)
-                            .background(Color(0xFFF0F0F0), CircleShape)
-                    ) {
-                        Icon(Icons.Default.Remove,
-                            null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp))
-                    }
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    Text(
-                        text = "$selectedDays Days",
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
-                    )
-
-                    Spacer(modifier = Modifier.width(12.dp))
-
-                    IconButton(
-                        onClick = {onDaysChange(selectedDays + 1)},
-                        modifier = Modifier.size(32.dp)
-                            .background(Color(0xFFF0F0F0),
-                                CircleShape)
-                    ) {
-                        Icon(Icons.Default.Add,
-                            contentDescription = null,
-                            tint = Color.Black,
-                            modifier = Modifier.size(16.dp))
-                    }
-                }
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Icon(
+                    Icons.Default.DateRange,
+                    contentDescription = null,
+                    tint = Color.DarkGray
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "$selectedDays Days Selected (Tap to change)",
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
+
             Spacer(modifier = Modifier.height(20.dp))
 
             Row(
@@ -198,9 +171,11 @@ fun CarItemCard(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Column {
-                    Text(text = stringResource(R.string.totalPrice),
+                    Text(
+                        text = stringResource(R.string.totalPrice),
                         fontSize = 12.sp,
-                        color = Color.Gray)
+                        color = Color.Gray
+                    )
                     Text(
                         text = "${currentTotalCost.toInt()}€",
                         fontSize = 22.sp,
@@ -213,8 +188,10 @@ fun CarItemCard(
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.mainColor)),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(text = stringResource(R.string.rentNow),
-                        fontWeight = FontWeight.Bold)
+                    Text(
+                        text = stringResource(R.string.rentNow),
+                        fontWeight = FontWeight.Bold
+                    )
                 }
             }
         }
@@ -248,7 +225,7 @@ fun CarItemPreview(){
             selectedDays = 3,
             currentTotalCost = 150.0,
             onExpandClick = {},
-            onDaysChange = {},
+            onDateClick = {},
             onRentClick = {}
         )
     }

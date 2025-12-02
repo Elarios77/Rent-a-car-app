@@ -7,10 +7,10 @@ import javax.inject.Inject
 class GetRentalDetailsUseCase @Inject constructor(
     private val repository: CarsRepository
 ) {
-    suspend operator fun  invoke(id: String): CarRentItem?{
-        return try{
+    suspend operator fun invoke(id: String): CarRentItem? {
+        return try {
             repository.getRentalById(id)
-        }catch(e: Exception){
+        } catch (e: Exception) {
             null
         }
     }

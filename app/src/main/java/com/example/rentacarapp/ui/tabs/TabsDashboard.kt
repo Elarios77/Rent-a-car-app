@@ -96,6 +96,6 @@ fun TabsDashboard() {
 
 @Preview(showBackground =true)
 @Composable
-fun previewTabs(){
+fun PreviewTabs(){
     TabsDashboard()
 }

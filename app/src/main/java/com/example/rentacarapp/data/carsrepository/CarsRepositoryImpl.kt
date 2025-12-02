@@ -15,10 +15,10 @@ class CarsRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
     private val dtoMapper: CarDtoMapper,
     private val entityMapper: CarEntityMapper
-): CarsRepository {
+) : CarsRepository {
     override suspend fun fetchCarSpecs(existingCar: CarRentItem): CarRentItem {
         val dto = remoteDataSource.getCarSpecs(make = existingCar.make, model = existingCar.model)
-        return dtoMapper(dto,existingCar)
+        return dtoMapper(dto, existingCar)
     }
 
     override fun getAllRentals(): Flow<List<CarRentItem>> {
@@ -33,8 +33,8 @@ class CarsRepositoryImpl @Inject constructor(
         car: CarRentItem,
         days: Int
     ) {
-        val entity = entityMapper(car,days)
-        entity?.let{
+        val entity = entityMapper(car, days)
+        entity?.let {
             localDataSource.insertRental(entity)
         }
     }

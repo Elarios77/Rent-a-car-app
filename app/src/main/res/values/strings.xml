@@ -10,7 +10,6 @@
     <string name="rent">Rent</string>
     <string name="history">History</string>
     <string name="company_Name">FlexDrive</string>
-    <string name="slogan">Drive on your terms</string>
     <string name="subslogan">Drive on your terms.</string>
     <string name="About_header">Who We Are</string>
     <string name="About_body">Established in 2015, FlexDrive was born from a simple vision: to redefine mobility. We believe that renting a car should be as flexible and dynamic as your lifestyle.
@@ -30,4 +29,7 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="location">Athens</string>
     <string name="totalPrice">Total Price</string>
     <string name="rentNow">RENT NOW</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="selectDates">Select Dates</string>
 </resources>
