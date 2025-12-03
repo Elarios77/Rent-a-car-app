@@ -27,12 +27,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
 import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun RentScreen(
     viewModel: RentViewModel = hiltViewModel()
@@ -51,42 +52,13 @@ fun RentScreen(
         }
     }
 
-    if(uiState.isDatePickerVisible){
-        val datePickerState = rememberDateRangePickerState(
-            initialSelectedStartDateMillis = uiState.dateSelectionStart,
-            initialSelectedEndDateMillis = uiState.dateSelectionEnd
-        )
-
-        DatePickerDialog(
-            onDismissRequest = { viewModel.toggleDatePicker(false)},
-            confirmButton = {
-                TextButton(
-                    onClick = {viewModel.onDaysSelected(
-                        datePickerState.selectedStartDateMillis,
-                        datePickerState.selectedEndDateMillis
-                    )
-                    }
-                ) { Text(stringResource(R.string.ok)) }
-            },
-            dismissButton = {
-                TextButton(onClick = {viewModel.toggleDatePicker(false)}) {
-                    Text(stringResource(R.string.cancel))
-                }
-            }
-        ) {
-            DateRangePicker(
-                state = datePickerState,
-                modifier = Modifier.height(500.dp),
-                title = {
-                    Text(
-                        text = stringResource(R.string.selectDates),
-                        modifier = Modifier.padding(16.dp),
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            )
-        }
-    }
+    DatePickerPopUp(
+        isVisible = uiState.isDatePickerVisible,
+        dateSelectionStart = uiState.dateSelectionStart,
+        dateSelectionEnd = uiState.dateSelectionEnd,
+        onConfirm = {start,end -> viewModel.onDaysSelected(start,end)},
+        onDismiss = {viewModel.toggleDatePicker(false)}
+    )
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -114,3 +86,61 @@ fun RentScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun DatePickerPopUp(
+    isVisible: Boolean,
+    dateSelectionStart:Long?,
+    dateSelectionEnd:Long?,
+    onConfirm:(Long?,Long?) -> Unit,
+    onDismiss:()-> Unit
+
+){
+    if(isVisible){
+        val datePickerState = rememberDateRangePickerState(
+            initialSelectedStartDateMillis = dateSelectionStart,
+            initialSelectedEndDateMillis = dateSelectionEnd
+        )
+
+        DatePickerDialog(
+            onDismissRequest = onDismiss,
+            confirmButton = {
+                TextButton(
+                    onClick = {onConfirm(
+                        datePickerState.selectedStartDateMillis,
+                        datePickerState.selectedEndDateMillis
+                    )}
+                ) { Text(stringResource(R.string.ok)) }
+            },
+            dismissButton = {
+                TextButton(onClick = onDismiss) {
+                    Text(stringResource(R.string.cancel))
+                }
+            }
+        ) {
+            DateRangePicker(
+                state = datePickerState,
+                modifier = Modifier.height(500.dp),
+                title = {
+                    Text(
+                        text = stringResource(R.string.selectDates),
+                        modifier = Modifier.padding(16.dp),
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DatePickerPreview(){
+    DatePickerPopUp(
+        isVisible = true,
+        dateSelectionStart = System.currentTimeMillis(),
+        dateSelectionEnd = System.currentTimeMillis() + 86400000L,
+        onConfirm = {_,_->},
+        onDismiss = {}
+    )
+}

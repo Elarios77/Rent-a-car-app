@@ -32,4 +32,5 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="selectDates">Select Dates</string>
+    <string name="rememberMe">Remember me</string>
 </resources>

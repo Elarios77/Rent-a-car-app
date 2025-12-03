@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,6 +24,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +58,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
 import com.example.rentacarapp.ui.login.viewmodel.LoginUiState
 import com.example.rentacarapp.ui.login.viewmodel.LoginViewModel
+import com.example.rentacarapp.ui.theme.RentACarAppTheme
 
 @Composable
 fun LoginScreen(
@@ -76,7 +81,8 @@ fun LoginScreen(
         uiState = uiState,
         onEmailChange = viewModel::onEmailChanged,
         onPasswordChange = viewModel::onPasswordChanged,
-        onLoginClick = viewModel::onLoginClicked
+        onLoginClick = viewModel::onLoginClicked,
+        onCheckBoxChanged = viewModel::onRememberMeChanged
     )
 }
 
@@ -85,7 +91,8 @@ fun LoginScreenContent(
     uiState: LoginUiState,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onCheckBoxChanged: (Boolean) -> Unit
 ){
     val scrollState = rememberScrollState()
 
@@ -126,7 +133,8 @@ fun LoginScreenContent(
                         uiState = uiState,
                         onEmailChange = onEmailChange,
                         onPasswordChange = onPasswordChange,
-                        onLoginClick = onLoginClick
+                        onLoginClick = onLoginClick,
+                        onCheckedBoxChange = onCheckBoxChanged
                     )
 
                 }
@@ -155,6 +163,7 @@ fun LoginFields(
     uiState: LoginUiState,
     onEmailChange:(String)-> Unit,
     onPasswordChange:(String)-> Unit,
+    onCheckedBoxChange: (Boolean) -> Unit,
     onLoginClick:()-> Unit
 ){
     Column{
@@ -192,7 +201,10 @@ fun LoginFields(
                 Icon(Icons.Default.Lock,contentDescription = null)
             }
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(5.dp))
+
+        RememberMeCheckBox(isChecked = uiState.isCheckboxChecked,
+            onCheckedChange = onCheckedBoxChange)
 
         if(uiState.errorMessage != null){
             Text(
@@ -224,20 +236,46 @@ fun LoginFields(
     }
 }
 
+@Composable
+fun RememberMeCheckBox(
+    isChecked:Boolean,
+    onCheckedChange:(Boolean)-> Unit
+
+){
+    Row(verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(3.dp)){
+        Checkbox(
+            checked = isChecked,
+            onCheckedChange = onCheckedChange,
+            colors = CheckboxDefaults.colors(
+                checkedColor = colorResource(R.color.mainColor),
+                uncheckedColor = Color.Gray,
+                checkmarkColor = Color.White
+            )
+        )
+        Text(text = stringResource(R.string.rememberMe),
+            fontSize = 14.sp,
+            color = Color.Black)
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview(){
-    val state = LoginUiState(
-        email = "example@test.com",
-        password = "123",
-        isLoading = false
-    )
+    RentACarAppTheme {
+        val state = LoginUiState(
+            email = "example@test.com",
+            password = "123",
+            isLoading = false
+        )
 
-    LoginScreenContent(
-        uiState = state,
-        onEmailChange = {},
-        onPasswordChange = {},
-        onLoginClick = {}
-    )
+        LoginScreenContent(
+            uiState = state,
+            onEmailChange = {},
+            onPasswordChange = {},
+            onLoginClick = {},
+            onCheckBoxChanged = {}
+        )
+    }
 }
 
