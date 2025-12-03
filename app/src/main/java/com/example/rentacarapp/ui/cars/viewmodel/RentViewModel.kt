@@ -39,14 +39,14 @@ class RentViewModel @Inject constructor(
             CarRentItem(
                 make = "Renault",
                 model = "Clio",
-                imageResourceId = R.drawable.clio,
+                imageResourceId = R.drawable.mini,
                 price = 57.0
             ),
             CarRentItem(
-                make = "Opel",
-                model = "Corsa",
-                imageResourceId = R.drawable.corsa,
-                price = 67.0
+                make = "Ford",
+                model = "Fiesta",
+                imageResourceId = R.drawable.fiesta,
+                price = 72.0
             ),
             CarRentItem(
                 make = "Audi",

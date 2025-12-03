@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Engineering
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.LocalGasStation
 import androidx.compose.material.icons.filled.SettingsSuggest
@@ -140,6 +141,7 @@ fun CarItemCard(
                     SpecItem(icon = Icons.Default.CalendarMonth,text = car.year.toString())
                     SpecItem(icon = Icons.Default.LocalGasStation, text = car.fuelType.toString())
                     SpecItem(icon = Icons.Default.SettingsSuggest,text = car.transmission.toString())
+                    SpecItem(icon = Icons.Default.Engineering, text = car.displacement?:"N/A")
                 }
             }
 
@@ -202,7 +204,7 @@ fun CarItemCard(
 fun SpecItem(icon: ImageVector,text:String){
     Column(horizontalAlignment = Alignment.CenterHorizontally){
         Icon(imageVector = icon,contentDescription = null,
-            tint = Color.Gray,modifier = Modifier.size(20.dp))
+            tint = Color.DarkGray,modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.height(4.dp))
         Text(text = text, fontSize = 12.sp, fontWeight = FontWeight.SemiBold,color = Color.DarkGray)
     }
@@ -219,7 +221,8 @@ fun CarItemPreview(){
                 price = 50.0,
                 year = 2022,
                 fuelType = "Petrol",
-                transmission = "Auto"
+                transmission = "Auto",
+                displacement = "1.6L"
             ),
             isExpanded = true,
             selectedDays = 3,
