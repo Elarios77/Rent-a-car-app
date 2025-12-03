@@ -1,10 +1,10 @@
-package com.example.rentacarapp.ui.cars.viewmodel
+package com.example.rentacarapp.ui.cars.rental.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.CarRentItem
-import com.example.rentacarapp.ui.cars.uistate.RentUiState
+import com.example.rentacarapp.ui.cars.rental.viewmodel.RentUiState
 import com.example.rentacarapp.usecase.cars.FetchCarSpecsUseCase
 import com.example.rentacarapp.usecase.cars.RentCarUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @HiltViewModel
@@ -105,7 +106,7 @@ class RentViewModel @Inject constructor(
         if (startMillis==null) return
         val finalEnd = endMillis ?:startMillis
         val difference = finalEnd - startMillis
-        val days = java.util.concurrent.TimeUnit.MILLISECONDS.toDays(difference).toInt()+1
+        val days = TimeUnit.MILLISECONDS.toDays(difference).toInt()+1
         val currentExpandedId = _uiState.value.expandedCarId
         val currentCar = _uiState.value.cars.find { it.id == currentExpandedId }
 

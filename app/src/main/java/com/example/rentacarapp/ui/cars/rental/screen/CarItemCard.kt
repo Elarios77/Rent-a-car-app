@@ -1,4 +1,4 @@
-package com.example.rentacarapp.ui.cars.screen
+package com.example.rentacarapp.ui.cars.rental.screen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState

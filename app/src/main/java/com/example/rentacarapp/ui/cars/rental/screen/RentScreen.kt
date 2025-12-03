@@ -1,4 +1,4 @@
-package com.example.rentacarapp.ui.cars.screen
+package com.example.rentacarapp.ui.cars.rental.screen
 
 
 import android.widget.Toast
@@ -30,7 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
-import com.example.rentacarapp.ui.cars.viewmodel.RentViewModel
+import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -102,9 +102,9 @@ fun RentScreen(
                     isExpanded = isExpanded,
                     selectedDays = uiState.selectedDays,
                     currentTotalCost = displayPrice,
-                    onExpandClick = {viewModel.onToggleCarExpand(car)},
-                    onDateClick = {viewModel.toggleDatePicker(true)},
-                    onRentClick = {viewModel.onRentClick(car)}
+                    onExpandClick = { viewModel.onToggleCarExpand(car) },
+                    onDateClick = { viewModel.toggleDatePicker(true) },
+                    onRentClick = { viewModel.onRentClick(car) }
                 )
             }
         }

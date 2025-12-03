@@ -1,4 +1,4 @@
-package com.example.rentacarapp.ui.cars.uistate
+package com.example.rentacarapp.ui.cars.rental.viewmodel
 
 import com.example.rentacarapp.domain.model.CarRentItem
 

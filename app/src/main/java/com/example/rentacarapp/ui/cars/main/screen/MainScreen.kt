@@ -1,4 +1,4 @@
-package com.example.rentacarapp.ui.cars.screen
+package com.example.rentacarapp.ui.cars.main.screen
 
 
 import androidx.compose.foundation.background

@@ -25,9 +25,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.rentacarapp.R
-import com.example.rentacarapp.ui.cars.screen.HistoryScreen
-import com.example.rentacarapp.ui.cars.screen.MainScreen
-import com.example.rentacarapp.ui.cars.screen.RentScreen
+import com.example.rentacarapp.ui.cars.HistoryScreen
+import com.example.rentacarapp.ui.cars.main.screen.MainScreen
+import com.example.rentacarapp.ui.cars.rental.screen.RentScreen
 import kotlinx.coroutines.launch
 
 sealed class TabItem( val title:Int, val icon : ImageVector){
