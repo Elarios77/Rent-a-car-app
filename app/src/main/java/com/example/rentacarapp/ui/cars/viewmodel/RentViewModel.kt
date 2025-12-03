@@ -37,8 +37,8 @@ class RentViewModel @Inject constructor(
                 price = 50.0
             ),
             CarRentItem(
-                make = "Renault",
-                model = "Clio",
+                make = "Mini",
+                model = "Cooper",
                 imageResourceId = R.drawable.mini,
                 price = 57.0
             ),
