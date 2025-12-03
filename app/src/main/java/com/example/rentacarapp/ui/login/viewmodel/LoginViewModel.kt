@@ -26,7 +26,7 @@ class LoginViewModel @Inject constructor(
         observeSavedCredentials()
     }
 
-    fun observeSavedCredentials(){
+    private fun observeSavedCredentials(){
         viewModelScope.launch {
             val credentials = userPreferences.readUserPreferences().first()
                 if(credentials !=null){

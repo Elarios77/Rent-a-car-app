@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.CarRentItem
-import com.example.rentacarapp.ui.cars.rental.viewmodel.RentUiState
 import com.example.rentacarapp.usecase.cars.FetchCarSpecsUseCase
 import com.example.rentacarapp.usecase.cars.RentCarUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

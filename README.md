@@ -29,4 +29,4 @@ Technical specifications for the vehicles are fetched in real-time using the [AP
 - [x] Dashboard & Navigation
 - [x] Rent Screen (Listing & Details)
 - [ ] History Screen Implementation (Room integration)
-- [ ] Unit Tests
+- [ ] Details and future implementations
