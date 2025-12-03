@@ -36,7 +36,8 @@ class LoginViewModel @Inject constructor(
                             password = credentials.pass,
                             isCheckboxChecked = true
                         )
-                    }                }
+                    }
+                }
         }
     }
     fun onEmailChanged(newEmail: String){
