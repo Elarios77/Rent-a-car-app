@@ -14,6 +14,7 @@ class CarEntityMapper @Inject constructor() {
             model = entity.model,
             imageResourceId = entity.imageResourceId,
             price = entity.price,
+            date = entity.date,
             year = null,
             fuelType = null,
             transmission = null

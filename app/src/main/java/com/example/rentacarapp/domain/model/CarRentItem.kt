@@ -10,7 +10,7 @@ data class CarRentItem(
     val displacement: String?=null,
     @DrawableRes val imageResourceId: Int,
     val price: Double,
-
+    val date :Long?=null,
     val year: Int? = null,
     val fuelType: String? = null,
     val transmission: String? = null
