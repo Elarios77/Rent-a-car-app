@@ -2,7 +2,7 @@ package com.example.rentacarapp.ui.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rentacarapp.data.local.UserPreferences
+import com.example.rentacarapp.framework.datasource.local.UserPreferences
 import com.example.rentacarapp.usecase.login.CustomerLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

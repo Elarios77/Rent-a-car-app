@@ -1,4 +1,4 @@
-package com.example.rentacarapp.data.local
+package com.example.rentacarapp.framework.datasource.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore

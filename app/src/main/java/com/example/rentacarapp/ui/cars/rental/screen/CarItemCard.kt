@@ -82,7 +82,8 @@ fun CarItemCard(
                 Image(painter = painterResource(id = car.imageResourceId),
                     contentDescription = car.model,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.width(150.dp)
+                        .height(90.dp)
                         .clip(RoundedCornerShape(12.dp)))
                 Spacer(modifier = Modifier.width(16.dp))
 
@@ -107,7 +108,7 @@ fun CarItemCard(
                 )
                 Text(
                     text = "/day",
-                    fontSize = 12.sp,
+                    fontSize = 17.sp,
                     color = Color.DarkGray
                 )
                 Spacer(modifier = Modifier.height(4.dp))
