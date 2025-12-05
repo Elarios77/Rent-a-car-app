@@ -7,8 +7,10 @@ A modern Android application simulating a premium car rental service. This proje
 ## 📱 Features
 
 * **Authentication Flow:**
-    * Simulated Login with validation.
-    * "Remember Me" functionality using **DataStore** (persists credentials for quick access).
+* Username: user@gmail.com
+* Password: user1234
+* Simulated Login with validation.
+* "Remember Me" functionality using **DataStore** (persists credentials for quick access).
 * **Modern Dashboard:**
     * Swipeable Top-Tab navigation (Main, Rent, History).
     * Custom UI components (Pill-shaped tabs, Hero sections).
