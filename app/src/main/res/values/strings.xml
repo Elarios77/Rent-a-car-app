@@ -35,4 +35,13 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="rememberMe">Remember me</string>
     <string name="no_rental_message">No rental history yet!</string>
     <string name="error_msg">Something went wrong</string>
+    <string name="checkout">Payment Details</string>
+    <string name="total">Total Amount</string>
+    <string name="card_info">************1234</string>
+    <string name="cardNumber">Card Number</string>
+    <string name="expiryDate">12/12/29</string>
+    <string name="expiry">Expiry</string>
+    <string name="cvv">CVV</string>
+    <string name="cvv_code">123</string>
+    <string name="pay_and_book">PAY &amp; BOOK</string>
 </resources>

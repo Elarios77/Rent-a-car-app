@@ -7,6 +7,7 @@ import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.usecase.cars.FetchCarSpecsUseCase
 import com.example.rentacarapp.usecase.cars.RentCarUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -92,25 +93,43 @@ class RentViewModel @Inject constructor(
     }
 
     fun onRentClick(car: CarRentItem) {
-        val days = _uiState.value.selectedDays
-        _uiState.update { it.copy(isLoading = true) }
-        viewModelScope.launch {
-            try {
-                rentCarUseCase(car, days)
-                _uiState.update {
-                    it.copy(
-                        isLoading = false,
-                        rentSuccess = true,
-                        expandedCarId = null
-                    )
-                }
-            } catch (e: Exception) {
-                _uiState.update { it.copy(isLoading = false, error = e.message) }
-            }
-        }
+        _uiState.update { it.copy(
+            isPaymentSheetVisible = true
+        ) }
     }
 
     fun resetMessages() {
         _uiState.update { it.copy(error = null, rentSuccess = false) }
+    }
+
+    fun onConfirmPayment(){
+        val currentState = _uiState.value
+        val days = _uiState.value.selectedDays
+        val currentCarId = _uiState.value.expandedCarId ?: return
+        val currentCar = _uiState.value.cars.find { it.id == currentCarId } ?:return
+        viewModelScope.launch {
+            _uiState.update { it.copy(isPaymentProcessing = true) }
+            delay((2000))
+
+            try{
+                rentCarUseCase(currentCar,days)
+                _uiState.update {
+                    it.copy(
+                        isPaymentProcessing = false,
+                        isPaymentSheetVisible = false,
+                        rentSuccess = true,
+                        expandedCarId = null
+                    )
+                }
+            }catch(e: Exception){
+                _uiState.update { it.copy(
+                    isPaymentProcessing = false, error = e.message
+                ) }
+            }
+        }
+    }
+
+    fun onDismissPayment(){
+        _uiState.update { it.copy(isPaymentSheetVisible = false) }
     }
 }

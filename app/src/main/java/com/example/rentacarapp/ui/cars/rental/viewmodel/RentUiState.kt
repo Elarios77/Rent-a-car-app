@@ -12,5 +12,7 @@ data class RentUiState (
     val isDatePickerVisible: Boolean = false,
     val isLoading: Boolean = false,
     val error:String?=null,
-    val rentSuccess:Boolean = false
+    val rentSuccess:Boolean = false,
+    val isPaymentSheetVisible: Boolean = false,
+    val isPaymentProcessing: Boolean = false
 )

@@ -61,7 +61,7 @@ This project is actively evolving. Future updates will focus on "Professional Po
 - [x] **Authentication:** Login UI & Logic + DataStore.
 - [x] **Rent Feature:** DateRangePicker, Price Calculation, Expandable UI.
 - [x] **History Feature:** Database CRUD operations.
-- [ ] **Payment Simulation:** Add a `ModalBottomSheet` with a fake payment form before renting.
+- [x] **Payment Simulation:** Add a `ModalBottomSheet` with a fake payment form before renting.
 - [ ] **User Profile:** Profile screen with Logout functionality.
 - [ ] **UI Polish:** Add Dark Mode support and animations.
 - [ ] **Unit Tests:** Testing UseCases and ViewModels.

@@ -52,6 +52,15 @@ fun RentScreen(
         }
     }
 
+    if(uiState.isPaymentSheetVisible){
+        PaymentSheet(
+            totalAmount = uiState.currentTotalCost,
+            isProcessing = uiState.isPaymentProcessing,
+            onDismiss = {viewModel.onDismissPayment()},
+            onConfirm = {viewModel.onConfirmPayment()}
+        )
+    }
+
     DatePickerPopUp(
         isVisible = uiState.isDatePickerVisible,
         dateSelectionStart = uiState.dateSelectionStart,
