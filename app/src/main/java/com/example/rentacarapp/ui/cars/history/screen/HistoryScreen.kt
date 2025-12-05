@@ -57,7 +57,7 @@ fun HistoryScreenContent(
     onDeleteClick : (CarRentItem) -> Unit
 ){
     Box(modifier = Modifier.fillMaxSize()
-        .background(colorResource(R.color.mainColor)))
+     .background(colorResource(R.color.mainColor)))
     {
         when{
             uiState.isLoading ->{
@@ -68,11 +68,12 @@ fun HistoryScreenContent(
             }
 
             uiState.errorMessage!=null->{
-                ErrorMessage(uiState)
+                ErrorMessage(uiState=uiState,
+                    modifier = Modifier.align(Alignment.Center))
             }
 
             uiState.rentals.isEmpty() ->{
-                EmptyList()
+                EmptyList(modifier = Modifier.align(Alignment.Center))
             }
 
             else ->{
@@ -84,9 +85,12 @@ fun HistoryScreenContent(
 }
 
 @Composable
-fun EmptyList(){
+fun EmptyList(
+    modifier: Modifier
+){
     Column(horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center){
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier){
         Icon(
             imageVector = Icons.Default.History,
             contentDescription = null,
@@ -105,9 +109,11 @@ fun EmptyList(){
 
 @Composable
 fun ErrorMessage(
-    uiState: HistoryUiState
+    uiState: HistoryUiState,
+    modifier: Modifier = Modifier
 ){
-    Column(verticalArrangement = Arrangement.Center,
+    Column(modifier = modifier,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally)
     {
         Icon(
