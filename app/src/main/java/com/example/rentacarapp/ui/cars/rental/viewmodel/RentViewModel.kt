@@ -2,7 +2,7 @@ package com.example.rentacarapp.ui.cars.rental.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.rentacarapp.R
+import com.example.rentacarapp.data.local.CarData
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.usecase.cars.FetchCarSpecsUseCase
 import com.example.rentacarapp.usecase.cars.RentCarUseCase
@@ -29,39 +29,7 @@ class RentViewModel @Inject constructor(
     }
 
     private fun loadCars() {
-        val initialCars = listOf(
-            CarRentItem(
-                make = "Toyota",
-                model = "Yaris",
-                imageResourceId = R.drawable.yaris,
-                price = 50.0
-            ),
-            CarRentItem(
-                make = "Mini",
-                model = "Cooper",
-                imageResourceId = R.drawable.mini,
-                price = 57.0
-            ),
-            CarRentItem(
-                make = "Ford",
-                model = "Fiesta",
-                imageResourceId = R.drawable.fiesta,
-                price = 72.0
-            ),
-            CarRentItem(
-                make = "Audi",
-                model = "RS Q8",
-                imageResourceId = R.drawable.rsq8,
-                price = 320.0
-            ),
-            CarRentItem(
-                make = "Lexus",
-                model = "GX 460",
-                imageResourceId = R.drawable.lexusgx460,
-                price = 244.0
-            )
-        )
-        _uiState.update { it.copy(cars = initialCars) }
+        _uiState.update { it.copy(cars = CarData.initialCars) }
     }
 
     fun onToggleCarExpand(car: CarRentItem) {
@@ -85,7 +53,7 @@ class RentViewModel @Inject constructor(
     }
 
     private fun fetchSpecsForCar(car: CarRentItem) {
-        if (car.year != null) return
+        if (car.fuelType != null && car.displacement!=null) return
         viewModelScope.launch {
             val updatedCar = fetchCarSpecsUseCase(car)
             _uiState.update { state ->

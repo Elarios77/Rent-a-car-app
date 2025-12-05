@@ -24,6 +24,7 @@ class CarEntityMapper @Inject constructor() {
     //Reverse Mapping
     operator fun invoke(item: CarRentItem,days: Int=0): CarEntity{
         return CarEntity(
+            id = item.id,
             make = item.make,
             model = item.model,
             imageResourceId = item.imageResourceId,

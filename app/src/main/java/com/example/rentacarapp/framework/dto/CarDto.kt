@@ -6,7 +6,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class CarDto (
     @Json(name = "fuel_type") val fuelType:String?,
-    @Json(name = "year") val year:Int?,
     @Json(name="transmission")val transmission: String?,
     @Json(name="displacement") val displacement:Double?
 )

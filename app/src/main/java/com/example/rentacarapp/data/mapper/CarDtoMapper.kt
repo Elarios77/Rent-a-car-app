@@ -9,14 +9,12 @@ class CarDtoMapper @Inject constructor() {
     operator fun invoke(dto: CarDto?,existingCar: CarRentItem): CarRentItem{
         if(dto==null){
             return existingCar.copy(
-                year = 0,
                 fuelType = "N/A",
                 transmission = "N/A",
                 displacement = "N/A"
             )
         }
         return existingCar.copy(
-            year = dto.year?:0,
             fuelType = dto.fuelType?.replaceFirstChar{it.uppercase()}?:"N/A",
             transmission = when(dto.transmission){
                 "a" -> "Automatic"

@@ -70,7 +70,7 @@ fun CarItemCard(
         .padding(horizontal = 16.dp, vertical = 8.dp)
         .animateContentSize(),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(containerColor = Color.LightGray),
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = onExpandClick
     )
@@ -89,7 +89,7 @@ fun CarItemCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(text = car.make,
                         fontSize = 14.sp,
-                        color = Color.Gray,
+                        color = Color.DarkGray,
                         fontWeight = FontWeight.SemiBold)
                     Text(text = car.model,
                         fontSize = 18.sp,
@@ -108,7 +108,7 @@ fun CarItemCard(
                 Text(
                     text = "/day",
                     fontSize = 12.sp,
-                    color = Color.Gray
+                    color = Color.DarkGray
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Icon(
@@ -126,7 +126,7 @@ fun CarItemCard(
             HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
             Spacer(modifier = Modifier.height(12.dp))
 
-            if(car.year == null){
+            if(car.fuelType == null && car.displacement == null){
                 Box(modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center){
                     CircularProgressIndicator(
@@ -139,8 +139,8 @@ fun CarItemCard(
                 Row(modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly){
                     SpecItem(icon = Icons.Default.CalendarMonth,text = car.year.toString())
-                    SpecItem(icon = Icons.Default.LocalGasStation, text = car.fuelType.toString())
-                    SpecItem(icon = Icons.Default.SettingsSuggest,text = car.transmission.toString())
+                    SpecItem(icon = Icons.Default.LocalGasStation, text = car.fuelType?:"N/A")
+                    SpecItem(icon = Icons.Default.SettingsSuggest,text = car.transmission?:"N/A")
                     SpecItem(icon = Icons.Default.Engineering, text = car.displacement?:"N/A")
                 }
             }
@@ -176,7 +176,7 @@ fun CarItemCard(
                     Text(
                         text = stringResource(R.string.totalPrice),
                         fontSize = 12.sp,
-                        color = Color.Gray
+                        color = Color.DarkGray
                     )
                     Text(
                         text = "${currentTotalCost.toInt()}€",
@@ -219,7 +219,7 @@ fun CarItemPreview(){
                 id= "1",make = "Audi",model="A3",
                 imageResourceId = R.drawable.rsq8,
                 price = 50.0,
-                year = 2022,
+                year = 2020,
                 fuelType = "Petrol",
                 transmission = "Auto",
                 displacement = "1.6L"
