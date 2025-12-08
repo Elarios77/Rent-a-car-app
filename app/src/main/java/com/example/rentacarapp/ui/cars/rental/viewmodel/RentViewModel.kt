@@ -103,7 +103,6 @@ class RentViewModel @Inject constructor(
     }
 
     fun onConfirmPayment(){
-        val currentState = _uiState.value
         val days = _uiState.value.selectedDays
         val currentCarId = _uiState.value.expandedCarId ?: return
         val currentCar = _uiState.value.cars.find { it.id == currentCarId } ?:return
