@@ -37,7 +37,9 @@ fun AppNavigation(
                 )
             }
             composable(route = LoginNavigation.Main.name){
-                TabsDashboard()
+                TabsDashboard(
+                    navController = navController
+                )
             }
         }
     }

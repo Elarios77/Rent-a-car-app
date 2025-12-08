@@ -44,4 +44,6 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="cvv">CVV</string>
     <string name="cvv_code">123</string>
     <string name="pay_and_book">PAY &amp; BOOK</string>
+    <string name="logout">Logout</string>
+    <string name="myprofile">My profile</string>
 </resources>
