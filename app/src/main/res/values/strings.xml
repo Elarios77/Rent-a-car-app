@@ -46,4 +46,5 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="pay_and_book">PAY &amp; BOOK</string>
     <string name="logout">Logout</string>
     <string name="myprofile">My profile</string>
+    <string name="personalInfo">Personal Information</string>
 </resources>
