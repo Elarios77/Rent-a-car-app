@@ -1,5 +1,6 @@
 package com.example.rentacarapp.ui.cars.rental.viewmodel
 
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 
 data class RentUiState (
@@ -14,5 +15,7 @@ data class RentUiState (
     val error:String?=null,
     val rentSuccess:Boolean = false,
     val isPaymentSheetVisible: Boolean = false,
-    val isPaymentProcessing: Boolean = false
+    val isPaymentProcessing: Boolean = false,
+    val groupedCars:Map<CarCategory?,List<CarRentItem>> = emptyMap(),
+    val expandedCategories:Set<CarCategory> = emptySet()
 )

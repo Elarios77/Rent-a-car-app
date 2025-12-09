@@ -1,8 +1,10 @@
 package com.example.rentacarapp.ui.cars.rental.viewmodel
 
+import android.app.ProgressDialog.show
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.rentacarapp.data.local.CarData
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.usecase.cars.FetchCarSpecsUseCase
 import com.example.rentacarapp.usecase.cars.RentCarUseCase
@@ -30,7 +32,12 @@ class RentViewModel @Inject constructor(
     }
 
     private fun loadCars() {
-        _uiState.update { it.copy(cars = CarData.initialCars) }
+        val allCars = CarData.initialCars
+        val grouped = allCars.groupBy { it.category }
+        _uiState.update {
+            it.copy(cars = allCars,
+                groupedCars = grouped)
+        }
     }
 
     fun onToggleCarExpand(car: CarRentItem) {
@@ -130,5 +137,18 @@ class RentViewModel @Inject constructor(
 
     fun onDismissPayment(){
         _uiState.update { it.copy(isPaymentSheetVisible = false) }
+    }
+
+    fun onToggleCategory(category: CarCategory){
+        _uiState.update { currentState->
+            val currentSet = currentState.expandedCategories
+
+            val newSet = if(currentSet.contains(category)){
+                currentSet - category
+            }else{
+                currentSet + category
+            }
+            currentState.copy(expandedCategories = newSet)
+        }
     }
 }

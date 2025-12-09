@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.ui.cars.history.viewmodel.HistoryUiState
 import com.example.rentacarapp.ui.cars.history.viewmodel.HistoryViewModel
@@ -160,11 +161,13 @@ fun HistoryPreview(){
     val mockRentals = listOf(
         CarRentItem(
             id = "1", make = "Toyota", model = "Yaris",
+            category = CarCategory.SMALL,
             imageResourceId = R.drawable.yaris,
             price = 105.0, date = System.currentTimeMillis()
         ),
         CarRentItem(
             id = "2", make = "Audi", model = "RS Q8",
+            category = CarCategory.SUV,
             imageResourceId = R.drawable.rsq8,
             price = 450.0, date = System.currentTimeMillis() - 86400000
         )
