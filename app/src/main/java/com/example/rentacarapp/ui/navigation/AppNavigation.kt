@@ -12,10 +12,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.rentacarapp.R
 import com.example.rentacarapp.ui.tabs.TabsDashboard
 import com.example.rentacarapp.ui.login.screen.LoginScreen
+import com.example.rentacarapp.ui.userprofile.screen.ProfileScreen
 
 enum class LoginNavigation(@StringRes val title : Int){
     Login(title = R.string.loginScreen),
-    Main(title = R.string.app_name)
+    Main(title = R.string.app_name),
+
+    Profile(title = R.string.personalInfo)
 }
 
 @Composable
@@ -41,6 +44,12 @@ fun AppNavigation(
                     navController = navController
                 )
             }
+            composable(route = LoginNavigation.Profile.name){
+                ProfileScreen(
+                    navController = navController
+                )
+            }
+
         }
     }
 }

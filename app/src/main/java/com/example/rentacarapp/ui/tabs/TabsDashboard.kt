@@ -72,13 +72,17 @@ fun TabsDashboard(
                     popUpTo(0) { inclusive = true }
                 }
             }
+        },
+        onProfileClick = {
+            navController.navigate(LoginNavigation.Profile.name)
         }
     )
 }
 
 @Composable
 fun TabsDashboardContent(
-    onLogoutClick: () -> Unit
+    onLogoutClick: () -> Unit,
+    onProfileClick:()-> Unit
 ) {
     val tabTitles = listOf(TabItem.Main, TabItem.Rent, TabItem.History)
     val pagerState = rememberPagerState { tabTitles.size }
@@ -161,7 +165,8 @@ fun TabsDashboardContent(
                     ) {
                         DropdownMenuItem(
                             text = { Text(text = stringResource(R.string.myprofile)) },
-                            onClick = { isProfileMenuExpanded = false },
+                            onClick = { isProfileMenuExpanded = false
+                                      onProfileClick()},
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Person,
@@ -202,6 +207,7 @@ fun TabsDashboardContent(
 @Composable
 fun TabsDashBoardPreview() {
     TabsDashboardContent(
-        onLogoutClick = {}
+        onLogoutClick = {},
+        onProfileClick = {}
     )
 }
