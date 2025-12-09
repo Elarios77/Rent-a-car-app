@@ -47,4 +47,6 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="logout">Logout</string>
     <string name="myprofile">My profile</string>
     <string name="personalInfo">Personal Information</string>
+    <string name="companyName">FlexDrive</string>
+    <string name="est_">est. 2015</string>
 </resources>

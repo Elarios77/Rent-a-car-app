@@ -1,7 +1,9 @@
 package com.example.rentacarapp.ui.userprofile.screen
 
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -150,6 +153,28 @@ fun ProfileScreen(
                 Column(modifier = Modifier.padding(16.dp)) {
                     ProfileInfoRow(icon = Icons.Default.CalendarToday,
                         label = "Member Since", value = user.memberSince)
+                }
+            }
+        }
+        Column(modifier = Modifier.fillMaxSize())
+        {
+            Spacer(modifier = Modifier.weight(1f))
+            Row(modifier = Modifier.background(color = colorResource(R.color.mainColor))
+                .fillMaxWidth()
+                .padding(12.dp),
+                horizontalArrangement = Arrangement.Center)
+            {
+                Column(verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally)
+                {
+                    Text(text = stringResource(R.string.company_Name),
+                        fontSize = 25.sp,
+                        fontStyle = FontStyle.Italic,
+                        color = Color.White)
+                    Text(text = stringResource(R.string.est_),
+                        fontSize = 15.sp,
+                        fontStyle = FontStyle.Italic,
+                        color = Color.White)
                 }
             }
         }
