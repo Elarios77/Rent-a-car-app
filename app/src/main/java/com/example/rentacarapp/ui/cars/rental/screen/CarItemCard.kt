@@ -3,6 +3,7 @@ package com.example.rentacarapp.ui.cars.rental.screen
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,10 +45,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.rentacarapp.R
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 
 @Composable
@@ -99,27 +102,27 @@ fun CarItemCard(
                 }
             }
 
-            Column(horizontalAlignment = Alignment.End){
-                Text(
-                    text = "${car.price.toInt()}€",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(R.color.darker_mainColor)
-                )
-                Text(
-                    text = "/day",
-                    fontSize = 17.sp,
-                    color = Color.DarkGray
-                )
-                Spacer(modifier = Modifier.height(4.dp))
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = null,
-                    modifier= Modifier.size(24.dp)
-                        .rotate(rotationState),
-                    tint = Color.Gray
-                )
-            }
+//            Column(horizontalAlignment = Alignment.End){
+//                Text(
+//                    text = "${car.price.toInt()}€",
+//                    fontSize = 18.sp,
+//                    fontWeight = FontWeight.Bold,
+//                    color = colorResource(R.color.darker_mainColor)
+//                )
+//                Text(
+//                    text = "/day",
+//                    fontSize = 17.sp,
+//                    color = Color.DarkGray
+//                )
+//                Spacer(modifier = Modifier.height(4.dp))
+//                Icon(
+//                    imageVector = Icons.Default.KeyboardArrowDown,
+//                    contentDescription = null,
+//                    modifier= Modifier.size(24.dp)
+//                        .rotate(rotationState),
+//                    tint = Color.Gray
+//                )
+//            }
         }
 
         if(isExpanded){
@@ -223,7 +226,8 @@ fun CarItemPreview(){
                 year = 2020,
                 fuelType = "Petrol",
                 transmission = "Auto",
-                displacement = "1.6L"
+                displacement = "1.6L",
+                category = CarCategory.SUV
             ),
             isExpanded = true,
             selectedDays = 3,
@@ -231,6 +235,70 @@ fun CarItemPreview(){
             onExpandClick = {},
             onDateClick = {},
             onRentClick = {}
+        )
+    }
+}
+
+@Composable
+fun CarItemSmallCard(
+    car: CarRentItem,
+    onClick:()-> Unit
+){
+    Card(modifier = Modifier.width(160.dp)
+        .padding(8.dp)
+        .clickable{onClick()},
+        elevation = CardDefaults.cardElevation(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        shape = RoundedCornerShape(12.dp))
+    {
+        Column(horizontalAlignment = Alignment.CenterHorizontally)
+        {
+            Image(painter = painterResource(id = car.imageResourceId),
+                contentDescription = car.model,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
+                    .height(100.dp))
+            Column(
+                modifier = Modifier.fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Text(text = car.make,
+                    fontSize = 12.sp,
+                    color = Color.Gray)
+                Text(text = car.model,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = Color.Gray)
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = "${car.price.toInt()}€/ day",
+                    color = colorResource(R.color.mainColor),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp
+                )
+            }
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CarItemSmallCardPreview(){
+    val mockCar = CarRentItem(
+        make = "Toyota",
+        model = "Yaris",
+        imageResourceId = R.drawable.yaris,
+        price = 45.0,
+        category = CarCategory.SMALL
+    )
+    Box(modifier = Modifier.padding(16.dp)){
+        CarItemSmallCard(
+            car = mockCar,
+            onClick = {}
         )
     }
 }

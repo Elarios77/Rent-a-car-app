@@ -2,38 +2,56 @@ package com.example.rentacarapp.ui.cars.rental.screen
 
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DateRangePicker
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDateRangePickerState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
+import com.example.rentacarapp.domain.model.CarCategory
+import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RentScreen(
     viewModel: RentViewModel = hiltViewModel()
@@ -75,23 +93,42 @@ fun RentScreen(
     ){
         LazyColumn(contentPadding = PaddingValues(bottom = 80.dp,top = 16.dp))
         {
-            items(uiState.cars,key = {it.id}) {car ->
-                val isExpanded = uiState.expandedCarId == car.id
-                val displayPrice = if (isExpanded) uiState.currentTotalCost else car.price
-                CarItemCard(
-                    car = car,
-                    isExpanded = isExpanded,
-                    selectedDays = uiState.selectedDays,
-                    currentTotalCost = displayPrice,
-                    onExpandClick = { viewModel.onToggleCarExpand(car) },
-                    onDateClick = { viewModel.toggleDatePicker(true) },
-                    onRentClick = { viewModel.onRentClick(car) }
+            items(uiState.groupedCars.entries.toList()){entry->
+                val category = entry.key
+                val carsInCategory = entry.value
+                CategorySelection(
+                    category = category!!,
+                    cars = carsInCategory,
+                    isExpanded = uiState.expandedCategories.contains(category),
+                    onToggle = {viewModel.onToggleCategory(category)},
+                    onCarClick = {car ->
+                        viewModel.selectCarForDetails(car)
+                    }
                 )
             }
         }
-        if(uiState.isLoading && uiState.expandedCarId == null){
+        if(uiState.isLoading){
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
+    }
+    if(uiState.selectedCarForDetails!=null){
+        ModalBottomSheet(
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            onDismissRequest = {viewModel.closeCarDetails()},
+            content = {
+                val selectedCar = uiState.selectedCarForDetails!!
+                CarItemCard(
+                    car = selectedCar,
+                    isExpanded = true,
+                    selectedDays = uiState.selectedDays,
+                    currentTotalCost = uiState.currentTotalCost,
+                    onExpandClick = {},
+                    onDateClick = {viewModel.toggleDatePicker(true)},
+                    onRentClick = {viewModel.onRentClick()}
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+            }
+        )
     }
 }
 
@@ -142,14 +179,46 @@ fun DatePickerPopUp(
     }
 }
 
-@Preview(showBackground = true)
 @Composable
-fun DatePickerPreview(){
-    DatePickerPopUp(
-        isVisible = true,
-        dateSelectionStart = System.currentTimeMillis(),
-        dateSelectionEnd = System.currentTimeMillis() + 86400000L,
-        onConfirm = {_,_->},
-        onDismiss = {}
+fun CategorySelection(
+    category: CarCategory,
+    cars:List<CarRentItem>,
+    isExpanded:Boolean,
+    onToggle:()-> Unit,
+    onCarClick:(CarRentItem)-> Unit
+){
+    val rotationState by animateFloatAsState(
+        targetValue = if(isExpanded)180F else 0f
     )
+        Column(modifier = Modifier.fillMaxWidth()
+            .padding(vertical = 4.dp))
+        {
+            Row(modifier = Modifier.fillMaxWidth()
+                .clickable{onToggle()}
+                .padding(16.dp))
+            {
+                Text(text = category.displayName,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    modifier = Modifier.rotate(rotationState),
+                    tint = Color.Gray
+                )
+            }
+            AnimatedVisibility(visible = isExpanded)
+            {
+                LazyRow(
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                ) {
+                    items(cars){car->
+                        CarItemSmallCard(car = car,
+                            onClick = {onCarClick(car)})
+                    }
+                }
+            }
+            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 2.dp)
+        }
 }

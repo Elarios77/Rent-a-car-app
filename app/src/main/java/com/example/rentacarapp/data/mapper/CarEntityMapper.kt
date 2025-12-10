@@ -1,6 +1,7 @@
 package com.example.rentacarapp.data.mapper
 
 import com.example.rentacarapp.data.entity.CarEntity
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import javax.inject.Inject
 
@@ -14,7 +15,8 @@ class CarEntityMapper @Inject constructor() {
             model = entity.model,
             imageResourceId = entity.imageResourceId,
             price = entity.price,
-            date = entity.date
+            date = entity.date,
+            category = CarCategory.ALL
         )
     }
 

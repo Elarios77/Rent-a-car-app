@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.rentacarapp.R
+import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.ui.cars.history.rentalDate.formatRentalDate
 
@@ -128,7 +129,8 @@ fun ItemCardPreview() {
             model = "RSQ8",
             date = System.currentTimeMillis(),
             imageResourceId = R.drawable.rsq8,
-            price = 350.0
+            price = 350.0,
+            category = CarCategory.SUV
         ),
         onDeleteClick = {}
     )

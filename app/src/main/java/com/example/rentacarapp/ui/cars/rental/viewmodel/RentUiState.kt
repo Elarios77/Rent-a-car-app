@@ -5,7 +5,6 @@ import com.example.rentacarapp.domain.model.CarRentItem
 
 data class RentUiState (
     val cars: List<CarRentItem> = emptyList(),
-    val expandedCarId: String? = null,
     val selectedDays:Int = 1,
     val currentTotalCost:Double = 0.0,
     val dateSelectionStart:Long?=null,
@@ -17,5 +16,6 @@ data class RentUiState (
     val isPaymentSheetVisible: Boolean = false,
     val isPaymentProcessing: Boolean = false,
     val groupedCars:Map<CarCategory?,List<CarRentItem>> = emptyMap(),
-    val expandedCategories:Set<CarCategory> = emptySet()
+    val expandedCategories:Set<CarCategory> = emptySet(),
+    val selectedCarForDetails: CarRentItem?=null
 )
