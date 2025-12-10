@@ -102,52 +102,46 @@ fun CarItemCard(
                 }
             }
 
-//            Column(horizontalAlignment = Alignment.End){
-//                Text(
-//                    text = "${car.price.toInt()}€",
-//                    fontSize = 18.sp,
-//                    fontWeight = FontWeight.Bold,
-//                    color = colorResource(R.color.darker_mainColor)
-//                )
-//                Text(
-//                    text = "/day",
-//                    fontSize = 17.sp,
-//                    color = Color.DarkGray
-//                )
-//                Spacer(modifier = Modifier.height(4.dp))
-//                Icon(
-//                    imageVector = Icons.Default.KeyboardArrowDown,
-//                    contentDescription = null,
-//                    modifier= Modifier.size(24.dp)
-//                        .rotate(rotationState),
-//                    tint = Color.Gray
-//                )
-//            }
+            Column(horizontalAlignment = Alignment.End){
+                Spacer(modifier = Modifier.height(16.dp))
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = null,
+                    modifier= Modifier.size(24.dp)
+                        .rotate(rotationState),
+                    tint = Color.Gray
+                )
+            }
         }
 
-        if(isExpanded){
+        if(isExpanded) {
             Spacer(modifier = Modifier.height(12.dp))
             HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
             Spacer(modifier = Modifier.height(12.dp))
 
-            if(car.fuelType == null && car.displacement == null){
-                Box(modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center){
+            if (car.fuelType == null && car.displacement == null) {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(30.dp),
                         color = colorResource(R.color.darker_mainColor),
                         strokeWidth = 3.dp
                     )
                 }
-            }else{
-                Row(modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly){
-                    SpecItem(icon = Icons.Default.CalendarMonth,text = car.year.toString())
-                    SpecItem(icon = Icons.Default.LocalGasStation, text = car.fuelType?:"N/A")
-                    SpecItem(icon = Icons.Default.SettingsSuggest,text = car.transmission?:"N/A")
-                    SpecItem(icon = Icons.Default.Engineering, text = car.displacement?:"N/A")
+            } else {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    SpecItem(icon = Icons.Default.CalendarMonth, text = car.year.toString())
+                    SpecItem(icon = Icons.Default.LocalGasStation, text = car.fuelType ?: "N/A")
+                    SpecItem(icon = Icons.Default.SettingsSuggest, text = car.transmission ?: "N/A")
+                    SpecItem(icon = Icons.Default.Engineering, text = car.displacement ?: "N/A")
                 }
             }
+        }
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -200,7 +194,7 @@ fun CarItemCard(
                     )
                 }
             }
-        }
+
     }
 }
 

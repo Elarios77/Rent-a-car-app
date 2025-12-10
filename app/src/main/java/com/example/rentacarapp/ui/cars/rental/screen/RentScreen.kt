@@ -35,6 +35,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -43,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -71,7 +75,7 @@ fun RentScreen(
     }
 
     if(uiState.isPaymentSheetVisible){
-        PaymentSheet(
+        PaymentDialog(
             totalAmount = uiState.currentTotalCost,
             isProcessing = uiState.isPaymentProcessing,
             onDismiss = {viewModel.onDismissPayment()},
@@ -112,6 +116,8 @@ fun RentScreen(
         }
     }
     if(uiState.selectedCarForDetails!=null){
+
+        var isSpecsExpanded by rememberSaveable { mutableStateOf(false) }
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             onDismissRequest = {viewModel.closeCarDetails()},
@@ -119,10 +125,10 @@ fun RentScreen(
                 val selectedCar = uiState.selectedCarForDetails!!
                 CarItemCard(
                     car = selectedCar,
-                    isExpanded = true,
+                    isExpanded = isSpecsExpanded,
                     selectedDays = uiState.selectedDays,
                     currentTotalCost = uiState.currentTotalCost,
-                    onExpandClick = {},
+                    onExpandClick = {isSpecsExpanded =!isSpecsExpanded},
                     onDateClick = {viewModel.toggleDatePicker(true)},
                     onRentClick = {viewModel.onRentClick()}
                 )
@@ -221,4 +227,35 @@ fun CategorySelection(
             }
             HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 2.dp)
         }
+}
+
+
+@Preview(showBackground = true)
+@Composable
+fun CategorySelectionPreview(){
+    CategorySelection(
+        category = CarCategory.SMALL,
+        cars = listOf(
+            CarRentItem(
+                make = "Toyota",
+                model = "Yaris",
+                imageResourceId = R.drawable.yaris,
+                price = 50.0,
+                category = CarCategory.SMALL,
+                year =2021
+            ),
+            CarRentItem(
+                make = "Toyota",
+                model = "Yaris",
+                imageResourceId = R.drawable.yaris,
+                price = 50.0,
+                category = CarCategory.SMALL,
+                year =2021
+            )
+
+        ),
+        isExpanded =true ,
+        onToggle = {},
+        onCarClick = {}
+    )
 }

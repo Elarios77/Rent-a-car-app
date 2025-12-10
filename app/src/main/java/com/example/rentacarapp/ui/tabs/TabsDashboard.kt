@@ -148,7 +148,8 @@ fun TabsDashboardContent(
                     }
                 }
                 Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)
-                    .background(color = colorResource(R.color.darker_mainColor))) {
+                    .background(color = colorResource(R.color.darker_mainColor))
+                ) {
                     IconButton(onClick = { isProfileMenuExpanded = true })
                     {
                         Icon(

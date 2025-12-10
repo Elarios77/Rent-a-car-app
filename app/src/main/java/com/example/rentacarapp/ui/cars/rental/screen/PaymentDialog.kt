@@ -2,6 +2,7 @@ package com.example.rentacarapp.ui.cars.rental.screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,14 +10,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CreditCard
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,22 +34,31 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.rentacarapp.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PaymentSheet(
+fun PaymentDialog(
     totalAmount: Double,
     isProcessing: Boolean,
-    onConfirm:()->Unit,
-    onDismiss:()-> Unit
-){
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        PaymentSheetContent(
-            totalAmount = totalAmount,
-            isProcessing = isProcessing,
-            onConfirm = onConfirm
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(24.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White)
         )
+        {
+            PaymentSheetContent(
+                totalAmount = totalAmount,
+                isProcessing = isProcessing,
+                onConfirm = onConfirm
+            )
+        }
+
     }
 
 }
@@ -56,14 +68,16 @@ fun PaymentSheetContent(
     totalAmount: Double,
     isProcessing: Boolean,
     onConfirm: () -> Unit
-){
-    Column(modifier= Modifier.fillMaxWidth()
-        .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally)
+) {
+    Column(
+        modifier = Modifier.padding(24.dp)
+            .width(IntrinsicSize.Max),
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
     {
         Icon(
-            painter =painterResource(R.drawable.credit_card),
-                contentDescription = null,
+            painter = painterResource(R.drawable.credit_card),
+            contentDescription = null,
             modifier = Modifier.size(85.dp)
         )
         Text(
@@ -72,9 +86,11 @@ fun PaymentSheetContent(
             fontSize = 30.sp
         )
         Spacer(modifier = Modifier.height(8.dp))
-        Text(text = stringResource(R.string.total),
+        Text(
+            text = stringResource(R.string.total),
             fontSize = 20.sp,
-            fontWeight = FontWeight.SemiBold)
+            fontWeight = FontWeight.SemiBold
+        )
         Spacer(modifier = Modifier.height(20.dp))
         Text(
             text = totalAmount.toString(),
@@ -87,13 +103,21 @@ fun PaymentSheetContent(
             value = stringResource(R.string.card_info),
             textStyle = TextStyle(fontSize = 20.sp),
             onValueChange = {},
-            label = {Text(text = stringResource(R.string.cardNumber),
-                fontSize = 15.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black)},
-            leadingIcon = {Icon(Icons.Default.CreditCard,
-                contentDescription = null,
-                tint = Color.Black)},
+            label = {
+                Text(
+                    text = stringResource(R.string.cardNumber),
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black
+                )
+            },
+            leadingIcon = {
+                Icon(
+                    Icons.Default.CreditCard,
+                    contentDescription = null,
+                    tint = Color.Black
+                )
+            },
             readOnly = true
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -103,10 +127,14 @@ fun PaymentSheetContent(
                 value = stringResource(R.string.cvv_code),
                 textStyle = TextStyle(fontSize = 20.sp),
                 onValueChange = {},
-                label = {Text(text = stringResource(R.string.cvv),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black)},
+                label = {
+                    Text(
+                        text = stringResource(R.string.cvv),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
+                },
                 modifier = Modifier.weight(1f),
                 readOnly = true
             )
@@ -115,27 +143,36 @@ fun PaymentSheetContent(
                 value = stringResource(R.string.expiryDate),
                 textStyle = TextStyle(fontSize = 20.sp),
                 onValueChange = {},
-                label = {Text(text = stringResource(R.string.expiry),
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.Black)},
+                label = {
+                    Text(
+                        text = stringResource(R.string.expiry),
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
+                    )
+                },
                 modifier = Modifier.weight(1f),
                 readOnly = true
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Row(modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        )
         {
             CreditCardIcons()
         }
         Spacer(modifier = Modifier.height(12.dp))
-        if(isProcessing){
-            CircularProgressIndicator(modifier = Modifier.size(30.dp),
+        if (isProcessing) {
+            CircularProgressIndicator(
+                modifier = Modifier.size(30.dp),
                 color = colorResource(R.color.darker_mainColor),
-                strokeWidth = 3.dp)
-        }else{
-            Button(onClick = onConfirm,
+                strokeWidth = 3.dp
+            )
+        } else {
+            Button(
+                onClick = onConfirm,
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(
                     contentColor = Color.White,
@@ -143,16 +180,18 @@ fun PaymentSheetContent(
                 )
             )
             {
-                Text(text = stringResource(R.string.pay_and_book),
-                    fontSize = 20.sp)
+                Text(
+                    text = stringResource(R.string.pay_and_book),
+                    fontSize = 20.sp
+                )
             }
         }
-        Spacer(modifier = Modifier.height(50.dp))
+        //Spacer(modifier = Modifier.height(50.dp))
     }
 }
 
 @Composable
-fun CreditCardIcons(){
+fun CreditCardIcons() {
     val cardIcons = listOf(
         R.drawable.visa,
         R.drawable.mastercard,
@@ -160,7 +199,7 @@ fun CreditCardIcons(){
         R.drawable.skrill
     )
 
-    cardIcons.forEach { iconRes->
+    cardIcons.forEach { iconRes ->
         Icon(
             painter = painterResource(id = iconRes),
             contentDescription = null,
@@ -169,7 +208,6 @@ fun CreditCardIcons(){
         )
     }
 }
-
 
 
 @Preview(showBackground = true)
