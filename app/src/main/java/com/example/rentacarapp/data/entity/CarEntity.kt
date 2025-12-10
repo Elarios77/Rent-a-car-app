@@ -13,5 +13,6 @@ data class CarEntity (
     val model : String,
     @DrawableRes val imageResourceId: Int,
     val price:Double,
-    val date: Long
+    val date: Long,
+    val days: Int
 )

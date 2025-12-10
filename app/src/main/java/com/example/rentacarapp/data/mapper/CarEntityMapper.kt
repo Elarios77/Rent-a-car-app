@@ -16,7 +16,8 @@ class CarEntityMapper @Inject constructor() {
             imageResourceId = entity.imageResourceId,
             price = entity.price,
             date = entity.date,
-            category = CarCategory.ALL
+            category = CarCategory.ALL,
+            rentDays = entity.days
         )
     }
 
@@ -28,7 +29,8 @@ class CarEntityMapper @Inject constructor() {
             model = item.model,
             imageResourceId = item.imageResourceId,
             price =item.price*days,
-            date = System.currentTimeMillis()
+            date = item.date?: System.currentTimeMillis(),
+            days = item.rentDays
         )
     }
 }

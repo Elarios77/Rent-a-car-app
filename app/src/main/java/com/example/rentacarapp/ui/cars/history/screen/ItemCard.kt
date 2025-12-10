@@ -1,6 +1,8 @@
 package com.example.rentacarapp.ui.cars.history.screen
 
+
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +29,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +43,11 @@ fun HistoryItemCard(
     car: CarRentItem,
     onDeleteClick: () -> Unit
 ) {
+
+    val startDateMillis = car.date ?: System.currentTimeMillis()
+    val oneDayMillis = 86400000L
+    val endDateMillis = startDateMillis + (car.rentDays * oneDayMillis)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,15 +55,13 @@ fun HistoryItemCard(
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(Color.LightGray)
-    )
-    {
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
-        )
-        {
+        ) {
             Image(
                 painter = painterResource(id = car.imageResourceId),
                 contentDescription = car.model,
@@ -66,52 +72,41 @@ fun HistoryItemCard(
                     .clip(RoundedCornerShape(6.dp))
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Column(modifier = Modifier.weight(1f))
-            {
-                Row()
-                {
+            Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = car.make,
-                        fontSize = 25.sp,
+                        text = "${car.make} ${car.model}",
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black
+                        color = Color.Black,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(
-                        text = car.model,
-                        fontSize = 25.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black
-                    )
-                }
                 Spacer(modifier = Modifier.height(6.dp))
                 HorizontalDivider(
-                    thickness = 2.dp,
-                    color = Color.Black
+                    thickness = 1.dp, color = Color.Black
                 )
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(
-                    text = formatRentalDate(car.date),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.DarkGray
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "${formatRentalDate(startDateMillis)} - ${formatRentalDate(endDateMillis)}",
+                        fontSize = 15.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.DarkGray
+                    )
+                }
             }
             Spacer(modifier = Modifier.width(8.dp))
-            Column(horizontalAlignment = Alignment.End)
-            {
+            Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = "${car.price}€",
-                    fontSize = 25.sp,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = colorResource(R.color.mainColor)
                 )
                 Spacer(modifier = Modifier.width(6.dp))
-                IconButton(onClick = onDeleteClick)
-                {
+                IconButton(onClick = onDeleteClick) {
                     Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = null
+                        imageVector = Icons.Default.Delete, contentDescription = null
                     )
                 }
             }

@@ -47,7 +47,7 @@ fun HistoryScreen(
 
     HistoryScreenContent(
         uiState = uiState,
-        onDeleteClick = {car -> viewModel.onDeleteClick(car)}
+        onDeleteClick = { car -> viewModel.onDeleteClick(car) }
     )
 
 }
@@ -55,30 +55,35 @@ fun HistoryScreen(
 @Composable
 fun HistoryScreenContent(
     uiState: HistoryUiState,
-    onDeleteClick : (CarRentItem) -> Unit
-){
-    Box(modifier = Modifier.fillMaxSize()
-     .background(colorResource(R.color.mainColor)))
+    onDeleteClick: (CarRentItem) -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.mainColor))
+    )
     {
-        when{
-            uiState.isLoading ->{
+        when {
+            uiState.isLoading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
             }
 
-            uiState.errorMessage!=null->{
-                ErrorMessage(uiState=uiState,
-                    modifier = Modifier.align(Alignment.Center))
+            uiState.errorMessage != null -> {
+                ErrorMessage(
+                    uiState = uiState,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
 
-            uiState.rentals.isEmpty() ->{
+            uiState.rentals.isEmpty() -> {
                 EmptyList(modifier = Modifier.align(Alignment.Center))
             }
 
-            else ->{
-                FilledList(uiState,onDeleteClick)
+            else -> {
+                FilledList(uiState, onDeleteClick)
             }
 
         }
@@ -88,10 +93,12 @@ fun HistoryScreenContent(
 @Composable
 fun EmptyList(
     modifier: Modifier
-){
-    Column(horizontalAlignment = Alignment.CenterHorizontally,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier){
+        modifier = modifier
+    ) {
         Icon(
             imageVector = Icons.Default.History,
             contentDescription = null,
@@ -112,10 +119,12 @@ fun EmptyList(
 fun ErrorMessage(
     uiState: HistoryUiState,
     modifier: Modifier = Modifier
-){
-    Column(modifier = modifier,
+) {
+    Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally)
+        horizontalAlignment = Alignment.CenterHorizontally
+    )
     {
         Icon(
             imageVector = Icons.Default.ErrorOutline,
@@ -144,19 +153,22 @@ fun ErrorMessage(
 fun FilledList(
     uiState: HistoryUiState,
     onDeleteClick: (CarRentItem) -> Unit
-){
+) {
     LazyColumn(
         contentPadding = PaddingValues(top = 16.dp, bottom = 80.dp)
-    ) { items(uiState.rentals , key= {it.id }){car->
-        HistoryItemCard(car = car,
-            onDeleteClick = {onDeleteClick(car)})
-    }
+    ) {
+        items(uiState.rentals, key = { it.id }) { car ->
+            HistoryItemCard(
+                car = car,
+                onDeleteClick = { onDeleteClick(car) }
+            )
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun HistoryPreview(){
+fun HistoryPreview() {
 
     val mockRentals = listOf(
         CarRentItem(
@@ -178,7 +190,7 @@ fun HistoryPreview(){
         errorMessage = null
     )
     HistoryScreenContent(
-        uiState =mockState,
+        uiState = mockState,
         onDeleteClick = {}
     )
 }

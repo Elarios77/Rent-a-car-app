@@ -7,6 +7,6 @@ import java.util.Locale
 fun formatRentalDate(timestamp: Long?) : String{
     if(timestamp == null) return ""
     val date = Date(timestamp)
-    val formattedDate = SimpleDateFormat("dd MM yyyy",Locale.getDefault())
+    val formattedDate = SimpleDateFormat("dd/MM/yy",Locale.getDefault())
     return formattedDate.format(date)
 }

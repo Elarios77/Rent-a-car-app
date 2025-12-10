@@ -92,14 +92,19 @@ class RentViewModel @Inject constructor(
     }
 
     fun onConfirmPayment() {
-        val days = _uiState.value.selectedDays
+        val startMillis = _uiState.value.dateSelectionStart
+
         val currentCar = _uiState.value.selectedCarForDetails ?: return
         viewModelScope.launch {
             _uiState.update { it.copy(isPaymentProcessing = true) }
-            delay((2000))
+            delay(2000)
 
             try {
-                rentCarUseCase(currentCar, days)
+                val carToBeSaved = currentCar.copy(
+                    date = startMillis,
+                    rentDays = _uiState.value.selectedDays
+                )
+                rentCarUseCase(carToBeSaved, _uiState.value.selectedDays)
                 _uiState.update {
                     it.copy(
                         isPaymentProcessing = false,
