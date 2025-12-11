@@ -1,5 +1,6 @@
 package com.example.rentacarapp.ui.tabs
 
+import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -75,6 +76,9 @@ fun TabsDashboard(
         },
         onProfileClick = {
             navController.navigate(LoginNavigation.Profile.name)
+        },
+        onInfoClick = {
+            navController.navigate(LoginNavigation.Info.name)
         }
     )
 }
@@ -82,7 +86,8 @@ fun TabsDashboard(
 @Composable
 fun TabsDashboardContent(
     onLogoutClick: () -> Unit,
-    onProfileClick:()-> Unit
+    onProfileClick: () -> Unit,
+    onInfoClick: ()-> Unit
 ) {
     val tabTitles = listOf(TabItem.Main, TabItem.Rent, TabItem.History)
     val pagerState = rememberPagerState { tabTitles.size }
@@ -147,8 +152,10 @@ fun TabsDashboardContent(
                         )
                     }
                 }
-                Box(modifier = Modifier.wrapContentSize(Alignment.TopEnd)
-                    .background(color = colorResource(R.color.darker_mainColor))
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize(Alignment.TopEnd)
+                        .background(color = colorResource(R.color.darker_mainColor))
                 ) {
                     IconButton(onClick = { isProfileMenuExpanded = true })
                     {
@@ -166,8 +173,10 @@ fun TabsDashboardContent(
                     ) {
                         DropdownMenuItem(
                             text = { Text(text = stringResource(R.string.myprofile)) },
-                            onClick = { isProfileMenuExpanded = false
-                                      onProfileClick()},
+                            onClick = {
+                                isProfileMenuExpanded = false
+                                onProfileClick()
+                            },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Person,
@@ -176,6 +185,14 @@ fun TabsDashboardContent(
                             }
                         )
 
+                        HorizontalDivider()
+                        DropdownMenuItem(
+                            text = {Text(text = stringResource(R.string.info))},
+                            onClick = {
+                                isProfileMenuExpanded = false
+                                onInfoClick()
+                            }
+                        )
                         HorizontalDivider()
                         DropdownMenuItem(
                             text = { Text(text = stringResource(R.string.logout)) },
@@ -210,6 +227,7 @@ fun TabsDashboardContent(
 fun TabsDashBoardPreview() {
     TabsDashboardContent(
         onLogoutClick = {},
-        onProfileClick = {}
+        onProfileClick = {},
+        onInfoClick = {}
     )
 }

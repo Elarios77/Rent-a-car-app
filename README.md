@@ -66,6 +66,7 @@ So far:
 - [x] **History Feature:** Database CRUD operations.
 - [x] **Payment Simulation:** Add a `Dialog` with a fake payment form before renting.
 - [x] **User Profile:** Profile screen with Logout functionality.
+- [x] **Info Screen:** FAQ and About
 - More to add ... 
 
 ---

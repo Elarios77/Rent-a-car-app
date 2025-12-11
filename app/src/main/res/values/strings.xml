@@ -49,4 +49,22 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="personalInfo">Personal Information</string>
     <string name="companyName">FlexDrive</string>
     <string name="est_">est. 2015</string>
+    <string name="info">Information</string>
+    <string name="faq_q1_title">What documents do I need to rent a car?</string>
+    <string name="faq_q1_answer">· You need a valid driver\'s license (held for at least one year), a major credit card in the driver\'s name, and proof of identity.</string>
+    <string name="faq_q2_title">What is the minimum age requirement?</string>
+    <string name="faq_q2_answer">· The minimum age for standard vehicle rental is 21. Drivers under 25 may incur a \'young driver\' surcharge.</string>
+    <string name="faq_q3_title">What does the basic insurance cover?</string>
+    <string name="faq_q3_answer">· Basic insurance includes Third-Party Liability (TPL) and Collision Damage Waiver (CDW) with an excess deductible. Full Comprehensive insurance is highly recommended.</string>
+    <string name="faq_q4_title">Is a security deposit required?</string>
+    <string name="faq_q4_answer">· Yes, a refundable security deposit will be authorized on your credit card upon vehicle pickup. The amount varies based on the car class and coverage chosen.</string>
+    <string name="faq_q5_title">What is your fuel policy?</string>
+    <string name="faq_q5_answer">· All vehicles are provided with a full tank and must be returned with a full tank. Vehicles returned with less fuel will be charged a refueling fee plus the cost of the missing fuel.</string>
+    <string name="faq_q6_title">What is your cancellation policy?</string>
+    <string name="faq_q6_answer">· Cancellations made more than 24 hours before the pickup time receive a full refund. Cancellations made within 24 hours may be subject to a one-day rental fee.</string>
+    <string name="faq">FAQ</string>
+    <string name="about">About</string>
+    <string name="about_developed_by">This application was developed by an aspiring developer as a learning project, continuously evolving to incorporate best practices and advanced Android tools.</string>
+    <string name="github_profile_url">https://github.com/Elarios77</string>
+    <string name="github_link_text">GitHub Profile: Click Here</string>
 </resources>

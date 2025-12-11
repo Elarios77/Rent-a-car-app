@@ -52,37 +52,44 @@ import com.example.rentacarapp.domain.model.UserProfile
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    user: UserProfile = UserProfile(
-        fName = "Fnamidis",
-        lName = "Unamidis",
-        email = "user@example.com",
-        phone = "694******",
-        address = "Str.8, Athens",
-        memberSince = "March 2023"
-    )
+    user: UserProfile
 ) {
-    Column(modifier = Modifier.fillMaxSize()
-        .background(color = Color.LightGray))
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.LightGray)
+    )
     {
-        Box(modifier = Modifier.fillMaxWidth()
-            .height(250.dp))
-        {
-            Box(modifier = Modifier
+        Box(
+            modifier = Modifier
                 .fillMaxWidth()
-                .height(180.dp)
-                .background(color = colorResource(R.color.mainColor),
-                    shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp))
-                )
-            Row(modifier = Modifier.padding(16.dp)
-                .align(Alignment.TopStart),
-                verticalAlignment = Alignment.CenterVertically)
+                .height(250.dp)
+        )
+        {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .background(
+                        color = colorResource(R.color.mainColor),
+                        shape = RoundedCornerShape(bottomStart = 30.dp, bottomEnd = 30.dp)
+                    )
+            )
+            Row(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.TopStart),
+                verticalAlignment = Alignment.CenterVertically
+            )
             {
                 IconButton(
-                    onClick = {navController.popBackStack()}
+                    onClick = { navController.popBackStack() }
                 ) {
-                    Icon(Icons.Default.ArrowBackIosNew,
+                    Icon(
+                        Icons.Default.ArrowBackIosNew,
                         contentDescription = null,
-                        tint = Color.Black)
+                        tint = Color.Black
+                    )
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
@@ -93,7 +100,7 @@ fun ProfileScreen(
                 )
             }
 
-            
+
             Column(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -101,12 +108,14 @@ fun ProfileScreen(
                 Surface(
                     shape = CircleShape,
                     shadowElevation = 8.dp,
-                    border = BorderStroke(4.dp,Color.White),
+                    border = BorderStroke(4.dp, Color.White),
                     modifier = Modifier.size(130.dp)
                 )
                 {
-                    Box(contentAlignment = Alignment.Center,
-                        modifier = Modifier.background(Color.LightGray))
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.background(Color.LightGray)
+                    )
                     {
                         Icon(
                             painter = painterResource(R.drawable.man),
@@ -116,15 +125,17 @@ fun ProfileScreen(
                     }
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "${user.fName} ${user.lName}",
+                Text(
+                    text = "${user.fName} ${user.lName}",
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Black)
+                    color = Color.Black
+                )
             }
         }
         Spacer(modifier = Modifier.height(50.dp))
 
-        Column(modifier = Modifier.padding(horizontal = 20.dp)){
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             Card(
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(6.dp),
@@ -133,17 +144,25 @@ fun ProfileScreen(
             ) {
                 Column(modifier = Modifier.padding(16.dp))
                 {
-                    ProfileInfoRow(icon = Icons.Default.Email,
-                        label = "Email", value = user.email)
-                    HorizontalDivider(thickness = 2.dp,color = Color.Gray)
+                    ProfileInfoRow(
+                        icon = Icons.Default.Email,
+                        label = "Email", value = user.email
+                    )
+                    HorizontalDivider(thickness = 2.dp, color = Color.Gray)
                     Spacer(modifier = Modifier.height(8.dp))
-                    ProfileInfoRow(icon = Icons.Default.Phone,
-                        label = "Phone", value = user.phone)
-                    HorizontalDivider(thickness = 2.dp,
-                        color = Color.Gray)
+                    ProfileInfoRow(
+                        icon = Icons.Default.Phone,
+                        label = "Phone", value = user.phone
+                    )
+                    HorizontalDivider(
+                        thickness = 2.dp,
+                        color = Color.Gray
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
-                    ProfileInfoRow(icon = Icons.Default.LocationOn,
-                        label = "Address", value = user.address)
+                    ProfileInfoRow(
+                        icon = Icons.Default.LocationOn,
+                        label = "Address", value = user.address
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -153,35 +172,47 @@ fun ProfileScreen(
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    ProfileInfoRow(icon = Icons.Default.CalendarToday,
-                        label = "Member Since", value = user.memberSince)
+                    ProfileInfoRow(
+                        icon = Icons.Default.CalendarToday,
+                        label = "Member Since", value = user.memberSince
+                    )
                 }
             }
         }
         Column(modifier = Modifier.fillMaxSize())
         {
             Spacer(modifier = Modifier.weight(1f))
-            Box(modifier = Modifier.background(color = colorResource(R.color.mainColor))
-                .fillMaxWidth()
-                .padding(12.dp))
+            Box(
+                modifier = Modifier
+                    .background(color = colorResource(R.color.mainColor))
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
             {
-                Column(verticalArrangement = Arrangement.Center,
+                Column(
+                    verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.align(Alignment.Center))
+                    modifier = Modifier.align(Alignment.Center)
+                )
                 {
-                    Text(text = stringResource(R.string.company_Name),
+                    Text(
+                        text = stringResource(R.string.company_Name),
                         fontSize = 25.sp,
                         fontStyle = FontStyle.Italic,
-                        color = Color.White)
-                    Text(text = stringResource(R.string.est_),
+                        color = Color.White
+                    )
+                    Text(
+                        text = stringResource(R.string.est_),
                         fontSize = 15.sp,
                         fontStyle = FontStyle.Italic,
-                        color = Color.White)
+                        color = Color.White
+                    )
                 }
                 Image(
                     painter = painterResource(R.drawable.logo),
                     contentDescription = null,
-                    modifier = Modifier.size(50.dp)
+                    modifier = Modifier
+                        .size(50.dp)
                         .align(Alignment.CenterEnd),
                     contentScale = ContentScale.Crop,
                 )
@@ -191,25 +222,32 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ProfileInfoRow(icon: ImageVector, label:String, value: String){
-    Row(verticalAlignment = Alignment.CenterVertically){
+fun ProfileInfoRow(icon: ImageVector, label: String, value: String) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Box(
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier
+                .size(40.dp)
                 .background(colorResource(R.color.mainColor)),
-            contentAlignment =Alignment.Center
-        ){
-            Icon(imageVector = icon,contentDescription = null,
-                tint = Color.White)
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = icon, contentDescription = null,
+                tint = Color.White
+            )
         }
         Spacer(modifier = Modifier.width(16.dp))
-        Column{
-            Text(text = label,
+        Column {
+            Text(
+                text = label,
                 fontSize = 18.sp,
-                color = Color.Gray)
-            Text(text = value,
+                color = Color.Gray
+            )
+            Text(
+                text = value,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.Black)
+                color = Color.Black
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
 
@@ -219,7 +257,7 @@ fun ProfileInfoRow(icon: ImageVector, label:String, value: String){
 
 @Preview(showBackground = true)
 @Composable
-fun ProfilePreview(){
+fun ProfilePreview() {
     val mockUser = UserProfile(
         fName = "Fnamidis",
         lName = "Lnamidis",
@@ -228,6 +266,8 @@ fun ProfilePreview(){
         address = "str.8 Athens",
         memberSince = "June 2024",
     )
-    ProfileScreen(navController = rememberNavController(),
-        user = mockUser)
+    ProfileScreen(
+        navController = rememberNavController(),
+        user = mockUser
+    )
 }
