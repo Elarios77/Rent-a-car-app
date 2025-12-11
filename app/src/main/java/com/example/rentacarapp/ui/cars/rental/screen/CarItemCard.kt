@@ -59,6 +59,7 @@ fun CarItemCard(
     isExpanded: Boolean,
     selectedDays: Int,
     currentTotalCost: Double,
+    isRentButtonEnabled:Boolean,
     onExpandClick: () -> Unit,
     onDateClick: () -> Unit,
     onRentClick: () -> Unit
@@ -184,6 +185,7 @@ fun CarItemCard(
                     )
                 }
                 Button(
+                    enabled = isRentButtonEnabled,
                     onClick = onRentClick,
                     colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.mainColor)),
                     shape = RoundedCornerShape(8.dp)
@@ -220,7 +222,7 @@ fun CarItemPreview(){
                 year = 2020,
                 fuelType = "Petrol",
                 transmission = "Auto",
-                displacement = "1.6L",
+                displacement = "3.2L",
                 category = CarCategory.SUV
             ),
             isExpanded = true,
@@ -228,7 +230,8 @@ fun CarItemPreview(){
             currentTotalCost = 150.0,
             onExpandClick = {},
             onDateClick = {},
-            onRentClick = {}
+            onRentClick = {},
+            isRentButtonEnabled = true
         )
     }
 }

@@ -2,7 +2,6 @@ package com.example.rentacarapp.ui.cars.history.screen
 
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,8 +44,7 @@ fun HistoryItemCard(
 ) {
 
     val startDateMillis = car.date ?: System.currentTimeMillis()
-    val oneDayMillis = 86400000L
-    val endDateMillis = startDateMillis + (car.rentDays * oneDayMillis)
+    val endDateMillis = startDateMillis + ((car.rentDays - 1) * 86400000L)
 
     Card(
         modifier = Modifier
@@ -73,14 +71,14 @@ fun HistoryItemCard(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = "${car.make} ${car.model}",
-                        fontSize = 20.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                Text(
+                    text = "${car.make} ${car.model}",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.Black,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Spacer(modifier = Modifier.height(6.dp))
                 HorizontalDivider(
                     thickness = 1.dp, color = Color.Black
@@ -88,7 +86,11 @@ fun HistoryItemCard(
                 Spacer(modifier = Modifier.height(6.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "${formatRentalDate(startDateMillis)} - ${formatRentalDate(endDateMillis)}",
+                        text = "${formatRentalDate(startDateMillis)} - ${
+                            formatRentalDate(
+                                endDateMillis
+                            )
+                        }",
                         fontSize = 15.sp,
                         fontWeight = FontWeight.Medium,
                         color = Color.DarkGray

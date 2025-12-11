@@ -63,23 +63,23 @@ fun RentScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    LaunchedEffect(uiState.rentSuccess,uiState.error) {
-        if(uiState.rentSuccess){
-            Toast.makeText(context,"Car rented! Check History tab.", Toast.LENGTH_SHORT).show()
+    LaunchedEffect(uiState.rentSuccess, uiState.error) {
+        if (uiState.rentSuccess) {
+            Toast.makeText(context, "Car rented! Check History tab.", Toast.LENGTH_SHORT).show()
             viewModel.resetMessages()
         }
-        if(uiState.error!=null){
-            Toast.makeText(context,"Error: ${uiState.error}", Toast.LENGTH_LONG).show()
+        if (uiState.error != null) {
+            Toast.makeText(context, "Error: ${uiState.error}", Toast.LENGTH_LONG).show()
             viewModel.resetMessages()
         }
     }
 
-    if(uiState.isPaymentSheetVisible){
+    if (uiState.isPaymentSheetVisible) {
         PaymentDialog(
             totalAmount = uiState.currentTotalCost,
             isProcessing = uiState.isPaymentProcessing,
-            onDismiss = {viewModel.onDismissPayment()},
-            onConfirm = {viewModel.onConfirmPayment()}
+            onDismiss = { viewModel.onDismissPayment() },
+            onConfirm = { viewModel.onConfirmPayment() }
         )
     }
 
@@ -87,50 +87,53 @@ fun RentScreen(
         isVisible = uiState.isDatePickerVisible,
         dateSelectionStart = uiState.dateSelectionStart,
         dateSelectionEnd = uiState.dateSelectionEnd,
-        onConfirm = {start,end -> viewModel.onDaysSelected(start,end)},
-        onDismiss = {viewModel.toggleDatePicker(false)}
+        onConfirm = { start, end -> viewModel.onDaysSelected(start, end) },
+        onDismiss = { viewModel.toggleDatePicker(false) }
     )
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(colorResource(R.color.mainColor))
-    ){
-        LazyColumn(contentPadding = PaddingValues(bottom = 80.dp,top = 16.dp))
+    ) {
+        LazyColumn(contentPadding = PaddingValues(bottom = 80.dp, top = 16.dp))
         {
-            items(uiState.groupedCars.entries.toList()){entry->
+            items(uiState.groupedCars.entries.toList()) { entry ->
                 val category = entry.key
                 val carsInCategory = entry.value
                 CategorySelection(
                     category = category!!,
                     cars = carsInCategory,
                     isExpanded = uiState.expandedCategories.contains(category),
-                    onToggle = {viewModel.onToggleCategory(category)},
-                    onCarClick = {car ->
+                    onToggle = { viewModel.onToggleCategory(category) },
+                    onCarClick = { car ->
                         viewModel.selectCarForDetails(car)
                     }
                 )
             }
         }
-        if(uiState.isLoading){
+        if (uiState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
-    if(uiState.selectedCarForDetails!=null){
+    if (uiState.selectedCarForDetails != null) {
 
         var isSpecsExpanded by rememberSaveable { mutableStateOf(false) }
         ModalBottomSheet(
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            onDismissRequest = {viewModel.closeCarDetails()},
+            onDismissRequest = { viewModel.closeCarDetails() },
             content = {
                 val selectedCar = uiState.selectedCarForDetails!!
+                val isButtonEnabled = uiState.dateSelectionStart !=null && !uiState.isPaymentProcessing
                 CarItemCard(
                     car = selectedCar,
                     isExpanded = isSpecsExpanded,
                     selectedDays = uiState.selectedDays,
                     currentTotalCost = uiState.currentTotalCost,
-                    onExpandClick = {isSpecsExpanded =!isSpecsExpanded},
-                    onDateClick = {viewModel.toggleDatePicker(true)},
-                    onRentClick = {viewModel.onRentClick()}
+                    onExpandClick = { isSpecsExpanded = !isSpecsExpanded },
+                    onDateClick = { viewModel.toggleDatePicker(true) },
+                    onRentClick = { viewModel.onRentClick() },
+                    isRentButtonEnabled = isButtonEnabled
                 )
                 Spacer(modifier = Modifier.height(32.dp))
             }
@@ -142,13 +145,13 @@ fun RentScreen(
 @Composable
 fun DatePickerPopUp(
     isVisible: Boolean,
-    dateSelectionStart:Long?,
-    dateSelectionEnd:Long?,
-    onConfirm:(Long?,Long?) -> Unit,
-    onDismiss:()-> Unit
+    dateSelectionStart: Long?,
+    dateSelectionEnd: Long?,
+    onConfirm: (Long?, Long?) -> Unit,
+    onDismiss: () -> Unit
 
-){
-    if(isVisible){
+) {
+    if (isVisible) {
         val datePickerState = rememberDateRangePickerState(
             initialSelectedStartDateMillis = dateSelectionStart,
             initialSelectedEndDateMillis = dateSelectionEnd
@@ -158,10 +161,12 @@ fun DatePickerPopUp(
             onDismissRequest = onDismiss,
             confirmButton = {
                 TextButton(
-                    onClick = {onConfirm(
-                        datePickerState.selectedStartDateMillis,
-                        datePickerState.selectedEndDateMillis
-                    )}
+                    onClick = {
+                        onConfirm(
+                            datePickerState.selectedStartDateMillis,
+                            datePickerState.selectedEndDateMillis
+                        )
+                    }
                 ) { Text(stringResource(R.string.ok)) }
             },
             dismissButton = {
@@ -188,51 +193,60 @@ fun DatePickerPopUp(
 @Composable
 fun CategorySelection(
     category: CarCategory,
-    cars:List<CarRentItem>,
-    isExpanded:Boolean,
-    onToggle:()-> Unit,
-    onCarClick:(CarRentItem)-> Unit
-){
+    cars: List<CarRentItem>,
+    isExpanded: Boolean,
+    onToggle: () -> Unit,
+    onCarClick: (CarRentItem) -> Unit
+) {
     val rotationState by animateFloatAsState(
-        targetValue = if(isExpanded)180F else 0f
+        targetValue = if (isExpanded) 180F else 0f
     )
-        Column(modifier = Modifier.fillMaxWidth()
-            .padding(vertical = 4.dp))
-        {
-            Row(modifier = Modifier.fillMaxWidth()
-                .clickable{onToggle()}
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onToggle() }
                 .padding(16.dp))
-            {
-                Text(text = category.displayName,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.Black)
-                Icon(
-                    imageVector = Icons.Default.KeyboardArrowDown,
-                    contentDescription = null,
-                    modifier = Modifier.rotate(rotationState),
-                    tint = Color.Gray
-                )
-            }
-            AnimatedVisibility(visible = isExpanded)
-            {
-                LazyRow(
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
-                ) {
-                    items(cars){car->
-                        CarItemSmallCard(car = car,
-                            onClick = {onCarClick(car)})
-                    }
+        {
+            Text(
+                text = category.displayName,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
+            )
+            Icon(
+                imageVector = Icons.Default.KeyboardArrowDown,
+                contentDescription = null,
+                modifier = Modifier.rotate(rotationState),
+                tint = Color.Gray
+            )
+        }
+        AnimatedVisibility(visible = isExpanded)
+        {
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                items(cars) { car ->
+                    CarItemSmallCard(
+                        car = car,
+                        onClick = { onCarClick(car) })
                 }
             }
-            HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 2.dp)
         }
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 2.dp)
+    }
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun CategorySelectionPreview(){
+fun CategorySelectionPreview() {
     CategorySelection(
         category = CarCategory.SMALL,
         cars = listOf(
@@ -242,7 +256,7 @@ fun CategorySelectionPreview(){
                 imageResourceId = R.drawable.yaris,
                 price = 50.0,
                 category = CarCategory.SMALL,
-                year =2021
+                year = 2021
             ),
             CarRentItem(
                 make = "Toyota",
@@ -250,11 +264,11 @@ fun CategorySelectionPreview(){
                 imageResourceId = R.drawable.yaris,
                 price = 50.0,
                 category = CarCategory.SMALL,
-                year =2021
+                year = 2021
             )
 
         ),
-        isExpanded =true ,
+        isExpanded = true,
         onToggle = {},
         onCarClick = {}
     )

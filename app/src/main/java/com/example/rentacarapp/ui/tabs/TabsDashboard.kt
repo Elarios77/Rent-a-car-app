@@ -193,7 +193,8 @@ fun TabsDashboardContent(
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            userScrollEnabled = false
         ) { pagerIndex ->
             when (pagerIndex) {
                 0 -> MainScreen()

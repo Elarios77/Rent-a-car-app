@@ -58,14 +58,14 @@ This app uses the **API Ninjas - Cars API** to fetch vehicle technical specifica
 ## 🔜 Roadmap & Future Improvements
 
 This project is actively evolving. Future updates will focus on "Professional Polish" and advanced features:
+So far: 
 
 - [x] **Core Architecture:** Setup Hilt, Room, Retrofit, Mappers.
 - [x] **Authentication:** Login UI & Logic + DataStore.
 - [x] **Rent Feature:** DateRangePicker, Price Calculation, Expandable UI.
 - [x] **History Feature:** Database CRUD operations.
 - [x] **Payment Simulation:** Add a `Dialog` with a fake payment form before renting.
-- [ ] **User Profile:** Profile screen with Logout functionality.
-- [ ] **UI Polish:** Add Dark Mode support and animations.
-- [ ] **Unit Tests:** Testing UseCases and ViewModels.
+- [x] **User Profile:** Profile screen with Logout functionality.
+- More to add ... 
 
 ---
