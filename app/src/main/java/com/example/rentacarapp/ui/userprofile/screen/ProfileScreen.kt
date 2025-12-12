@@ -2,9 +2,7 @@ package com.example.rentacarapp.ui.userprofile.screen
 
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,11 +33,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,6 +44,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.UserProfile
+import com.example.rentacarapp.ui.components.CustomFooter
 
 @Composable
 fun ProfileScreen(
@@ -179,45 +176,7 @@ fun ProfileScreen(
                 }
             }
         }
-        Column(modifier = Modifier.fillMaxSize())
-        {
-            Spacer(modifier = Modifier.weight(1f))
-            Box(
-                modifier = Modifier
-                    .background(color = colorResource(R.color.mainColor))
-                    .fillMaxWidth()
-                    .padding(12.dp)
-            )
-            {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                {
-                    Text(
-                        text = stringResource(R.string.company_Name),
-                        fontSize = 25.sp,
-                        fontStyle = FontStyle.Italic,
-                        color = Color.White
-                    )
-                    Text(
-                        text = stringResource(R.string.est_),
-                        fontSize = 15.sp,
-                        fontStyle = FontStyle.Italic,
-                        color = Color.White
-                    )
-                }
-                Image(
-                    painter = painterResource(R.drawable.logo),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(50.dp)
-                        .align(Alignment.CenterEnd),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-        }
+        CustomFooter(color = colorResource(R.color.mainColor))
     }
 }
 

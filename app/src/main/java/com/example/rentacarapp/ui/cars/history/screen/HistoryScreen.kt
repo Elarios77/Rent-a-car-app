@@ -38,6 +38,7 @@ import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.ui.cars.history.viewmodel.HistoryUiState
 import com.example.rentacarapp.ui.cars.history.viewmodel.HistoryViewModel
+import com.example.rentacarapp.ui.components.CustomFooter
 
 @Composable
 fun HistoryScreen(
@@ -87,6 +88,7 @@ fun HistoryScreenContent(
             }
 
         }
+        CustomFooter(color = Color.Gray)
     }
 }
 

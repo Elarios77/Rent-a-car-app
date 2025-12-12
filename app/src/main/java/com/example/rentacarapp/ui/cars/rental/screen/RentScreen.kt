@@ -54,6 +54,7 @@ import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
 import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
+import com.example.rentacarapp.ui.components.CustomFooter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,6 +116,7 @@ fun RentScreen(
         if (uiState.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
+        CustomFooter(color = Color.Gray)
     }
     if (uiState.selectedCarForDetails != null) {
 

@@ -1,6 +1,5 @@
 package com.example.rentacarapp.ui.info
 
-
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -38,7 +37,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
@@ -55,6 +55,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.rentacarapp.R
 import com.example.rentacarapp.data.local.FaqData
+import com.example.rentacarapp.ui.components.CustomFooter
 
 @Composable
 fun InfoScreen(
@@ -109,6 +110,7 @@ fun InfoScreen(
                 )
             }
         }
+        CustomFooter(color = Color.Gray)
     }
 }
 
@@ -169,8 +171,10 @@ fun ExpandableCard(
 @Composable
 fun FaqContent() {
 
-    val configuration = LocalConfiguration.current // screen max size
-    val maxHeight = (configuration.screenHeightDp.dp * 0.5f)
+    val maxHeight = with(LocalDensity.current){
+        LocalWindowInfo.current.containerSize.height.toDp()
+    } *0.5f
+
     Column(modifier = Modifier.fillMaxWidth()
         .heightIn(max = maxHeight)
         .verticalScroll(rememberScrollState())) {
@@ -196,17 +200,15 @@ fun FaqContent() {
 @Composable
 fun AboutContent(){
 
-    //val uriHandler = LocalUriHandler.current
-    val githubUrl = stringResource(R.string.github_profile_url)
-
-    val configuration = LocalConfiguration.current // screen max size
-    val maxHeight = (configuration.screenHeightDp.dp * 0.5f)
+       val maxHeight = with(LocalDensity.current){
+        LocalWindowInfo.current.containerSize.height.toDp()
+    } *0.5f
 
     val githubLink = buildAnnotatedString {
         append("Source code and profile: ")
         withLink(
             LinkAnnotation.Url(
-                url = githubUrl,
+                url = stringResource(R.string.github_profile_url),
                 styles = TextLinkStyles(style = SpanStyle(color = Color.White,
                     textDecoration = TextDecoration.Underline))
             )

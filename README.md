@@ -67,6 +67,6 @@ So far:
 - [x] **Payment Simulation:** Add a `Dialog` with a fake payment form before renting.
 - [x] **User Profile:** Profile screen with Logout functionality.
 - [x] **Info Screen:** FAQ and About
-- More to add ... 
+- More to add ... Currently implementing an ai model for car advices
 
 ---
