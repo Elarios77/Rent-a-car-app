@@ -30,6 +30,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String","API_NINJAS_KEY","\"${localProperties.getProperty("API_NINJAS_KEY")}\"")
+        buildConfigField("String","GEMINI_API_KEY","\"${localProperties.getProperty("GEMINI_API_KEY")}\"")
     }
 
     buildTypes {
@@ -99,4 +100,6 @@ dependencies {
 
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     implementation(platform("androidx.compose:compose-bom:2025.10.01"))
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 }

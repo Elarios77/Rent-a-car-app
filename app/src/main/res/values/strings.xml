@@ -67,4 +67,5 @@ What started as a local passion project has evolved into a leading rental servic
     <string name="about_developed_by">This application was developed by an aspiring developer as a learning project, continuously evolving to incorporate best practices and advanced Android tools.</string>
     <string name="github_profile_url">https://github.com/Elarios77</string>
     <string name="github_link_text">GitHub Profile: Click Here</string>
+    <string name="aiAssistant">Rent a car assistant</string>
 </resources>

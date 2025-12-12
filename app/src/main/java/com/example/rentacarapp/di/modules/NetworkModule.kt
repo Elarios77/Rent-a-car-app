@@ -2,6 +2,7 @@ package com.example.rentacarapp.di.modules
 
 import com.example.rentacarapp.BuildConfig
 import com.example.rentacarapp.framework.api.CarApiService
+import com.google.ai.client.generativeai.GenerativeModel
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -20,7 +21,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiKey():String = BuildConfig.API_NINJAS_KEY
+    fun provideApiKey(): String = BuildConfig.API_NINJAS_KEY
 
     @Provides
     @Singleton
@@ -32,13 +33,13 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient{
-        val okHttpClient =  OkHttpClient.Builder()
-            .connectTimeout(30,TimeUnit.SECONDS)
-            .writeTimeout(30,TimeUnit.SECONDS)
-            .readTimeout(30,TimeUnit.SECONDS)
+    ): OkHttpClient {
+        val okHttpClient = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             okHttpClient.addNetworkInterceptor(loggingInterceptor)
         }
         return okHttpClient.build()
@@ -46,7 +47,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCarApiService(client: OkHttpClient,moshi: Moshi): CarApiService{
+    fun provideCarApiService(client: OkHttpClient, moshi: Moshi): CarApiService {
         return Retrofit.Builder()
             .baseUrl("https://api.api-ninjas.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
@@ -60,4 +61,13 @@ object NetworkModule {
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().setLevel(
         HttpLoggingInterceptor.Level.BODY
     )
+
+    @Provides
+    @Singleton
+    fun provideGenerativeModel(): GenerativeModel {
+        return GenerativeModel(
+            modelName = "gemini_pro",
+            apiKey = BuildConfig.GEMINI_API_KEY
+        )
+    }
 }

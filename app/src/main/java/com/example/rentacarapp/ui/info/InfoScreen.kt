@@ -55,7 +55,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.rentacarapp.R
 import com.example.rentacarapp.data.local.FaqData
-import com.example.rentacarapp.ui.components.CustomFooter
+import com.example.rentacarapp.ui.reusablecomponents.CustomFooter
 
 @Composable
 fun InfoScreen(

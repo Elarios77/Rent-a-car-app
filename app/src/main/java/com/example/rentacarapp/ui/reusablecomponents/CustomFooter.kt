@@ -1,4 +1,4 @@
-package com.example.rentacarapp.ui.components
+package com.example.rentacarapp.ui.reusablecomponents
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
