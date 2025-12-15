@@ -78,7 +78,7 @@ This app uses the **API Ninjas - Cars API** to fetch vehicle technical specifica
     <img src="screenshots/rent.jpg" width="250"/>
     <img src="screenshots/ai_digital_assistant.jpg" width="250"/>
     <img src="screenshots/profile.jpg" width="250"/>
-    <img src="screenshots/specs_date.jpg" width="250"/>
+    <img src="screenshots/specs_dates.jpg" width="250"/>
     </div>
 
 ## 🔜 Roadmap & Future Improvements
