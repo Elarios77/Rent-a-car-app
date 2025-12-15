@@ -49,20 +49,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
-import com.example.rentacarapp.ui.ai.screen.ChatOverlay
-import com.example.rentacarapp.ui.ai.viewModel.MainViewModel
 import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
 import com.example.rentacarapp.ui.reusablecomponents.CustomFooter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RentScreen(
-    viewModel: RentViewModel = hiltViewModel(),
-    chatViewModel: MainViewModel = hiltViewModel()
+    viewModel: RentViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -77,7 +75,6 @@ fun RentScreen(
             viewModel.resetMessages()
         }
     }
-    Box(modifier = Modifier.fillMaxSize()) {
 
         if (uiState.isPaymentSheetVisible) {
             PaymentDialog(
@@ -146,8 +143,6 @@ fun RentScreen(
                 }
             )
         }
-        ChatOverlay(viewModel = chatViewModel)
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -168,6 +163,7 @@ fun DatePickerPopUp(
 
         DatePickerDialog(
             onDismissRequest = onDismiss,
+            properties = DialogProperties(usePlatformDefaultWidth = false),
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -186,7 +182,8 @@ fun DatePickerPopUp(
         ) {
             DateRangePicker(
                 state = datePickerState,
-                modifier = Modifier.height(500.dp),
+                modifier = Modifier.weight(1f),
+                showModeToggle = false,
                 title = {
                     Text(
                         text = stringResource(R.string.selectDates),
