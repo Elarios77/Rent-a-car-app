@@ -94,8 +94,10 @@ fun InfoScreen(
         }
         HorizontalDivider(thickness = 4.dp, color = Color.Gray)
         Spacer(modifier = Modifier.height(50.dp))
-        LazyColumn(contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(32.dp))
+        LazyColumn(
+            contentPadding = PaddingValues(12.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp)
+        )
         {
             item {
                 ExpandableCard(
@@ -103,7 +105,7 @@ fun InfoScreen(
                     content = { FaqContent() }
                 )
             }
-            item{
+            item {
                 ExpandableCard(
                     title = stringResource(R.string.about),
                     content = { AboutContent() }
@@ -128,7 +130,7 @@ fun ExpandableCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { isExpanded =! isExpanded },
+            .clickable { isExpanded = !isExpanded },
         elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(colorResource(R.color.darker_mainColor))
     )
@@ -158,8 +160,11 @@ fun ExpandableCard(
             }
             AnimatedVisibility(visible = isExpanded)
             {
-                Column(modifier = Modifier.fillMaxWidth()
-                    .padding(8.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
                     content()
                 }
             }
@@ -171,24 +176,31 @@ fun ExpandableCard(
 @Composable
 fun FaqContent() {
 
-    val maxHeight = with(LocalDensity.current){
+    val maxHeight = with(LocalDensity.current) {
         LocalWindowInfo.current.containerSize.height.toDp()
-    } *0.5f
+    } * 0.5f
 
-    Column(modifier = Modifier.fillMaxWidth()
-        .heightIn(max = maxHeight)
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = maxHeight)
+            .verticalScroll(rememberScrollState())
+    ) {
         FaqData.Questions.forEach { fAQItem ->
-            Text(text = stringResource(id = fAQItem.question),
+            Text(
+                text = stringResource(id = fAQItem.question),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
-                color = Color.White)
+                color = Color.White
+            )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = stringResource(id = fAQItem.answer),
+            Text(
+                text = stringResource(id = fAQItem.answer),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
-                color = Color.White)
-            if(fAQItem != FaqData.Questions.last()){
+                color = Color.White
+            )
+            if (fAQItem != FaqData.Questions.last()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 HorizontalDivider(thickness = 1.dp, color = Color.White)
                 Spacer(modifier = Modifier.height(10.dp))
@@ -198,31 +210,40 @@ fun FaqContent() {
 }
 
 @Composable
-fun AboutContent(){
+fun AboutContent() {
 
-       val maxHeight = with(LocalDensity.current){
+    val maxHeight = with(LocalDensity.current) {
         LocalWindowInfo.current.containerSize.height.toDp()
-    } *0.5f
+    } * 0.5f
 
     val githubLink = buildAnnotatedString {
         append("Source code and profile: ")
         withLink(
             LinkAnnotation.Url(
                 url = stringResource(R.string.github_profile_url),
-                styles = TextLinkStyles(style = SpanStyle(color = Color.White,
-                    textDecoration = TextDecoration.Underline))
+                styles = TextLinkStyles(
+                    style = SpanStyle(
+                        color = Color.White,
+                        textDecoration = TextDecoration.Underline
+                    )
+                )
             )
-        ){
+        ) {
             append("GitHub")
         }
     }
 
-    Column(modifier = Modifier.fillMaxWidth()
-        .heightIn(max = maxHeight)
-        .verticalScroll(rememberScrollState())) {
-        Text( text = stringResource(R.string.about_developed_by),
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = maxHeight)
+            .verticalScroll(rememberScrollState())
+    ) {
+        Text(
+            text = stringResource(R.string.about_developed_by),
             fontSize = 16.sp,
-            color = Color.White)
+            color = Color.White
+        )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = githubLink,

@@ -70,15 +70,15 @@ import com.example.rentacarapp.ui.theme.RentACarAppTheme
 @Composable
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel(),
-    onLoginSuccess:()->Unit
+    onLoginSuccess: () -> Unit
 ) {
 
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(uiState.success) {
-        if(uiState.success){
-            Toast.makeText(context,"Successful connection", Toast.LENGTH_SHORT).show()
+        if (uiState.success) {
+            Toast.makeText(context, "Successful connection", Toast.LENGTH_SHORT).show()
             onLoginSuccess()
             viewModel.resetLoginState()
         }
@@ -100,7 +100,7 @@ fun LoginScreenContent(
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
     onCheckBoxChanged: (Boolean) -> Unit
-){
+) {
     val scrollState = rememberScrollState()
 
     Surface(modifier = Modifier.fillMaxSize()) {
@@ -113,26 +113,33 @@ fun LoginScreenContent(
                 radiusY = 3.dp
             )
         )
-        Column(modifier = Modifier.fillMaxSize()
-            .verticalScroll(scrollState),
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center){
-            Box(modifier = Modifier.padding(8.dp)
-                .alpha(0.8f)
-                .clip(
-                    CutCornerShape(
-                        topStart = 10.dp,
-                        topEnd = 10.dp,
-                        bottomStart = 10.dp,
-                        bottomEnd = 10.dp
+            verticalArrangement = Arrangement.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .alpha(0.8f)
+                    .clip(
+                        CutCornerShape(
+                            topStart = 10.dp,
+                            topEnd = 10.dp,
+                            bottomStart = 10.dp,
+                            bottomEnd = 10.dp
+                        )
                     )
-                )
-                .background(MaterialTheme.colorScheme.background)
-                .wrapContentHeight()
-            ){
-                Column(modifier = Modifier.padding(48.dp),
+                    .background(MaterialTheme.colorScheme.background)
+                    .wrapContentHeight()
+            ) {
+                Column(
+                    modifier = Modifier.padding(48.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center)
+                    verticalArrangement = Arrangement.Center
+                )
                 {
                     LoginHeader()
                     Spacer(modifier = Modifier.height(20.dp))
@@ -152,32 +159,36 @@ fun LoginScreenContent(
 }
 
 @Composable
-fun LoginHeader(){
+fun LoginHeader() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = stringResource(R.string.welcome_back),
+        Text(
+            text = stringResource(R.string.welcome_back),
             fontSize = 35.sp,
             fontWeight = FontWeight.ExtraBold,
-            color = Color.Black)
-        Text(text = stringResource(R.string.signIn),
+            color = Color.Black
+        )
+        Text(
+            text = stringResource(R.string.signIn),
             fontSize = 18.sp,
             fontWeight = FontWeight.SemiBold,
-            color = Color.Black)
+            color = Color.Black
+        )
     }
 }
 
 @Composable
 fun LoginFields(
     uiState: LoginUiState,
-    onEmailChange:(String)-> Unit,
-    onPasswordChange:(String)-> Unit,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onCheckedBoxChange: (Boolean) -> Unit,
-    onLoginClick:()-> Unit
-){
-    Column{
+    onLoginClick: () -> Unit
+) {
+    Column {
         OutlinedTextField(
             value = uiState.email,
             onValueChange = onEmailChange,
-            label = {Text(text = stringResource(R.string.email))},
+            label = { Text(text = stringResource(R.string.email)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
             keyboardOptions = KeyboardOptions(
@@ -186,7 +197,7 @@ fun LoginFields(
             ),
             shape = RoundedCornerShape(12.dp),
             leadingIcon = {
-                Icon(Icons.Default.Email,contentDescription = null)
+                Icon(Icons.Default.Email, contentDescription = null)
             }
         )
 
@@ -196,12 +207,12 @@ fun LoginFields(
         OutlinedTextField(
             value = uiState.password,
             onValueChange = onPasswordChange,
-            label = {Text(text = stringResource(R.string.password))},
+            label = { Text(text = stringResource(R.string.password)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth(),
-            visualTransformation = if (showPassword){
+            visualTransformation = if (showPassword) {
                 VisualTransformation.None
-            }else{
+            } else {
                 PasswordVisualTransformation()
             },
             keyboardOptions = KeyboardOptions(
@@ -209,15 +220,15 @@ fun LoginFields(
                 imeAction = ImeAction.Done
             ),
             trailingIcon = {
-                if(showPassword){
-                    IconButton(onClick = {showPassword = false}) {
+                if (showPassword) {
+                    IconButton(onClick = { showPassword = false }) {
                         Icon(
                             imageVector = Icons.Filled.Visibility,
                             contentDescription = null
                         )
                     }
-                }else{
-                    IconButton(onClick = {showPassword = true}) {
+                } else {
+                    IconButton(onClick = { showPassword = true }) {
                         Icon(
                             imageVector = Icons.Filled.VisibilityOff,
                             contentDescription = null
@@ -227,15 +238,17 @@ fun LoginFields(
             },
             shape = RoundedCornerShape(12.dp),
             leadingIcon = {
-                Icon(Icons.Default.Lock,contentDescription = null)
+                Icon(Icons.Default.Lock, contentDescription = null)
             }
         )
         Spacer(modifier = Modifier.height(5.dp))
 
-        RememberMeCheckBox(isChecked = uiState.isCheckboxChecked,
-            onCheckedChange = onCheckedBoxChange)
+        RememberMeCheckBox(
+            isChecked = uiState.isCheckboxChecked,
+            onCheckedChange = onCheckedBoxChange
+        )
 
-        if(uiState.errorMessage != null){
+        if (uiState.errorMessage != null) {
             Text(
                 text = uiState.errorMessage,
                 color = MaterialTheme.colorScheme.error,
@@ -244,12 +257,13 @@ fun LoginFields(
                 modifier = Modifier.padding(vertical = 8.dp)
             )
         }
-        if(uiState.isLoading){
+        if (uiState.isLoading) {
             CircularProgressIndicator()
-        }else{
+        } else {
             Button(
                 onClick = onLoginClick,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(50.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(
@@ -257,9 +271,11 @@ fun LoginFields(
                     contentColor = Color.White
                 )
             ) {
-                Text(text = stringResource(R.string.signIn_Footer),
+                Text(
+                    text = stringResource(R.string.signIn_Footer),
                     fontSize = 17.sp,
-                    fontWeight = FontWeight.Bold)
+                    fontWeight = FontWeight.Bold
+                )
             }
         }
     }
@@ -267,12 +283,14 @@ fun LoginFields(
 
 @Composable
 fun RememberMeCheckBox(
-    isChecked:Boolean,
-    onCheckedChange:(Boolean)-> Unit
+    isChecked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 
-){
-    Row(verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(3.dp)){
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(3.dp)
+    ) {
         Checkbox(
             checked = isChecked,
             onCheckedChange = onCheckedChange,
@@ -282,15 +300,17 @@ fun RememberMeCheckBox(
                 checkmarkColor = Color.White
             )
         )
-        Text(text = stringResource(R.string.rememberMe),
+        Text(
+            text = stringResource(R.string.rememberMe),
             fontSize = 14.sp,
-            color = Color.Black)
+            color = Color.Black
+        )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun LoginScreenPreview(){
+fun LoginScreenPreview() {
     RentACarAppTheme {
         val state = LoginUiState(
             email = "example@test.com",

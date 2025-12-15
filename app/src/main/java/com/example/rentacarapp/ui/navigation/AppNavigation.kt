@@ -53,7 +53,7 @@ fun AppNavigation(
                     user = UserProfile()
                 )
             }
-            composable(route = LoginNavigation.Info.name){
+            composable(route = LoginNavigation.Info.name) {
                 InfoScreen(
                     navController = navController
                 )

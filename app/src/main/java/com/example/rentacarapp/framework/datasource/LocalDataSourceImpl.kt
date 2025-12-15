@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class LocalDataSourceImpl @Inject constructor(
     private val dao: CarDao
-): LocalDataSource {
+) : LocalDataSource {
     override fun getAllRentals(): Flow<List<CarEntity>> {
         return dao.getAllRentals()
     }

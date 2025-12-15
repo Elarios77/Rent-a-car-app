@@ -10,9 +10,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    fun onLogoutClick(onLogoutSuccess:()-> Unit){
+    fun onLogoutClick(onLogoutSuccess: () -> Unit) {
         viewModelScope.launch {
             logoutUseCase()
             onLogoutSuccess()

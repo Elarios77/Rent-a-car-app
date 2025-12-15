@@ -108,9 +108,11 @@ fun ChatOverlayContent(
                 .padding(16.dp)
                 .size(64.dp)
         ) {
-            Icon(imageVector = if(uiState.isChatOpen)Icons.Default.Close else Icons.Default.SmartToy,
+            Icon(
+                imageVector = if (uiState.isChatOpen) Icons.Default.Close else Icons.Default.SmartToy,
                 contentDescription = null,
-                modifier = Modifier.size(32.dp))
+                modifier = Modifier.size(32.dp)
+            )
         }
     }
 }
@@ -119,37 +121,46 @@ fun ChatOverlayContent(
 fun ChatWindow(
     messages: List<ChatMessage>,
     isLoading: Boolean,
-    error : String?,
+    error: String?,
     onSendMessage: (String) -> Unit,
-    close:()-> Unit
+    close: () -> Unit
 ) {
-    var inputText by remember{ mutableStateOf("") }
+    var inputText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
     val focus = LocalFocusManager.current
 
     LaunchedEffect(messages.size) {
-        if(messages.isNotEmpty()) listState.animateScrollToItem(messages.size-1)
+        if (messages.isNotEmpty()) listState.animateScrollToItem(messages.size - 1)
     }
 
     Card(
-        modifier = Modifier.width(320.dp).height(450.dp),
+        modifier = Modifier
+            .width(320.dp)
+            .height(450.dp),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(10.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
-        Column(modifier = Modifier.fillMaxSize()){
-            Box(modifier = Modifier.fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primary)
-                .padding(12.dp),)
+        Column(modifier = Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = MaterialTheme.colorScheme.primary)
+                    .padding(12.dp),
+            )
 
             {
-                Text(text = stringResource(R.string.aiAssistant),
+                Text(
+                    text = stringResource(R.string.aiAssistant),
                     color = Color.White,
                     fontSize = 20.sp,
-                    modifier = Modifier.align(Alignment.CenterStart))
+                    modifier = Modifier.align(Alignment.CenterStart)
+                )
 
-                IconButton(onClick = close,
-                    modifier = Modifier.align(Alignment.CenterEnd) )
+                IconButton(
+                    onClick = close,
+                    modifier = Modifier.align(Alignment.CenterEnd)
+                )
                 {
                     Icon(
                         imageVector = Icons.Default.Close,
@@ -160,41 +171,54 @@ fun ChatWindow(
             }
             LazyColumn(
                 state = listState,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                items(messages){msg->ChatBubble(msg)}
+                items(messages) { msg -> ChatBubble(msg) }
 
-                if(isLoading){
-                    item{Text(text = "Typing...",
+                if (isLoading) {
+                    item {
+                        Text(
+                            text = "Typing...",
                             fontSize = 12.sp,
-                            color = Color.Gray)}
+                            color = Color.Gray
+                        )
+                    }
                 }
-                if(error!=null){
-                    item{Text("Error: $error",
-                        color = Color.Red)}
+                if (error != null) {
+                    item {
+                        Text(
+                            "Error: $error",
+                            color = Color.Red
+                        )
+                    }
                 }
             }
 
-            Row(modifier = Modifier.padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically){
+            Row(
+                modifier = Modifier.padding(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 OutlinedTextField(
                     value = inputText,
-                    onValueChange = {inputText = it},
+                    onValueChange = { inputText = it },
                     modifier = Modifier.weight(1f),
-                    placeholder = {Text(text = "Ask...")},
+                    placeholder = { Text(text = "Ask...") },
                     shape = RoundedCornerShape(8.dp)
                 )
                 IconButton(onClick = {
-                    if(inputText.isNotBlank()){
+                    if (inputText.isNotBlank()) {
                         onSendMessage(inputText)
                         inputText = ""
                         focus.clearFocus()
                     }
                 }) {
-                    Icon(Icons.AutoMirrored.Filled.Send,
-                        contentDescription = null)
+                    Icon(
+                        Icons.AutoMirrored.Filled.Send,
+                        contentDescription = null
+                    )
                 }
             }
         }
@@ -204,19 +228,23 @@ fun ChatWindow(
 @Composable
 fun ChatBubble(
     message: ChatMessage
-){
+) {
     val isUser = message.isUser
-    Box(modifier = Modifier.fillMaxWidth(),
-        contentAlignment = if(isUser) Alignment.CenterEnd else Alignment.CenterStart)
+    Box(
+        modifier = Modifier.fillMaxWidth(),
+        contentAlignment = if (isUser) Alignment.CenterEnd else Alignment.CenterStart
+    )
     {
         Surface(
             shape = RoundedCornerShape(12.dp),
-            color = if( isUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
+            color = if (isUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
 
-        ){
-            Text(text = message.text,
+        ) {
+            Text(
+                text = message.text,
                 modifier = Modifier.padding(8.dp),
-                fontSize = 18.sp)
+                fontSize = 18.sp
+            )
         }
     }
 }

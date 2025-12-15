@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class CarDtoMapper @Inject constructor() {
 
-    operator fun invoke(dto: CarDto?,existingCar: CarRentItem): CarRentItem{
-        if(dto==null){
+    operator fun invoke(dto: CarDto?, existingCar: CarRentItem): CarRentItem {
+        if (dto == null) {
             return existingCar.copy(
                 fuelType = "N/A",
                 transmission = "N/A",
@@ -15,13 +15,13 @@ class CarDtoMapper @Inject constructor() {
             )
         }
         return existingCar.copy(
-            fuelType = dto.fuelType?.replaceFirstChar{it.uppercase()}?:"N/A",
-            transmission = when(dto.transmission){
+            fuelType = dto.fuelType?.replaceFirstChar { it.uppercase() } ?: "N/A",
+            transmission = when (dto.transmission) {
                 "a" -> "Automatic"
                 "m" -> "Manual"
-                else -> dto.transmission ?:"N/A"
+                else -> dto.transmission ?: "N/A"
             },
-            displacement = dto.displacement?.let{"$it L"}?:"N/A"
+            displacement = dto.displacement?.let { "$it L" } ?: "N/A"
         )
     }
 }

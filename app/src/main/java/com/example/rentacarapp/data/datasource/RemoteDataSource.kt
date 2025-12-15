@@ -4,6 +4,6 @@ import com.example.rentacarapp.framework.dto.CarDto
 
 interface RemoteDataSource {
 
-    suspend fun getCarSpecs(make:String,model: String): CarDto?
+    suspend fun getCarSpecs(make: String, model: String): CarDto?
 
 }

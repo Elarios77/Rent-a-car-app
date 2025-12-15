@@ -13,40 +13,39 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-private val Context.dataStore : DataStore<Preferences> by preferencesDataStore(name ="user_prefs")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "user_prefs")
 
 @Singleton
 class UserPreferences @Inject constructor(
- @ApplicationContext   private val context: Context
+    @ApplicationContext private val context: Context
 ) {
-    companion object{
+    companion object {
         val EMAIL_KEY = stringPreferencesKey(name = "user_email")
         val PASS_KEY = stringPreferencesKey(name = "user_pass")
     }
 
 
-    suspend fun saveUserPreferences(email:String,pass: String){
+    suspend fun saveUserPreferences(email: String, pass: String) {
         context.dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = email
             preferences[PASS_KEY] = pass
         }
     }
 
-    fun readUserPreferences():Flow<UserCredentials?>{
-        return context.dataStore.data.map {
-            preferences ->
-            val email = preferences[EMAIL_KEY]?:""
-            val pass = preferences[PASS_KEY]?:""
+    fun readUserPreferences(): Flow<UserCredentials?> {
+        return context.dataStore.data.map { preferences ->
+            val email = preferences[EMAIL_KEY] ?: ""
+            val pass = preferences[PASS_KEY] ?: ""
 
-            if(email.isNotEmpty() && pass.isNotEmpty()){
-                UserCredentials(email,pass)
-            }else{
+            if (email.isNotEmpty() && pass.isNotEmpty()) {
+                UserCredentials(email, pass)
+            } else {
                 null
             }
         }
     }
 
-    suspend fun clear(){
+    suspend fun clear() {
         context.dataStore.edit { it.clear() }
     }
 }

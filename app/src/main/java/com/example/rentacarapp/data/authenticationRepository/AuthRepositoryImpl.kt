@@ -13,9 +13,9 @@ class AuthRepositoryImpl @Inject constructor() : AuthRepository {
         val validEmail = "user@example.com"
         val validPass = "user1234"
 
-        return if(email == validEmail && password == validPass){
+        return if (email == validEmail && password == validPass) {
             Result.success(Unit)
-        }else{
+        } else {
             Result.failure(Exception("Wrong email or password"))
         }
     }

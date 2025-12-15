@@ -28,7 +28,7 @@ import com.example.rentacarapp.R
 @Composable
 fun CustomFooter(
     color: Color
-){
+) {
     Column(modifier = Modifier.fillMaxSize())
     {
         Spacer(modifier = Modifier.weight(1f))
@@ -72,6 +72,6 @@ fun CustomFooter(
 
 @Preview
 @Composable
-fun footerPreview(){
+fun FooterPreview() {
     CustomFooter(color = colorResource(R.color.mainColor))
 }

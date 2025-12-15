@@ -11,8 +11,8 @@ interface CarApiService {
 
     @GET("v1/cars")
     suspend fun getCarDetails(
-        @Query("make") make:String,
-        @Query("model") model:String,
+        @Query("make") make: String,
+        @Query("model") model: String,
         @Header("X-Api-Key") apiKey: String
     ): Response<List<CarDto>>
 }

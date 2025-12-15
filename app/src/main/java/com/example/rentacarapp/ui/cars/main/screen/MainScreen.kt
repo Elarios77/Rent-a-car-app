@@ -41,7 +41,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -184,39 +183,52 @@ fun MainScreen(
 
 
 @Composable
-fun InfoCard(title:String,content: String){
-    Card(elevation = CardDefaults.cardElevation(
-        defaultElevation = 8.dp),
+fun InfoCard(title: String, content: String) {
+    Card(
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 8.dp
+        ),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
     ) {
-        Column(modifier = Modifier.padding(20.dp),
+        Column(
+            modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = title,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = title,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
-                color =colorResource(R.color.mainColor),)
-            HorizontalDivider(thickness = 2.dp,
-                color = Color.LightGray)
+                color = colorResource(R.color.mainColor),
+            )
+            HorizontalDivider(
+                thickness = 2.dp,
+                color = Color.LightGray
+            )
             Spacer(modifier = Modifier.padding(8.dp))
-            Text(text = content,
+            Text(
+                text = content,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = colorResource(R.color.mainColor),
-                textAlign = TextAlign.Justify)
+                textAlign = TextAlign.Justify
+            )
         }
     }
 }
 
 @Composable
-fun FeatureRow(icon : ImageVector,title: String,body: String){
-    Row(modifier = Modifier.fillMaxWidth()
-        .padding(vertical = 8.dp)
-        .background(Color.White,RoundedCornerShape(12.dp))
-        .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically) {
+fun FeatureRow(icon: ImageVector, title: String, body: String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+            .background(Color.White, RoundedCornerShape(12.dp))
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
@@ -224,31 +236,41 @@ fun FeatureRow(icon : ImageVector,title: String,body: String){
             modifier = Modifier.size(28.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Column{
-            Text(text = title,
+        Column {
+            Text(
+                text = title,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
-                color = colorResource(R.color.darker_mainColor))
-            Text(text = body,
+                color = colorResource(R.color.darker_mainColor)
+            )
+            Text(
+                text = body,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 14.sp,
-                color = colorResource(R.color.darker_mainColor))
+                color = colorResource(R.color.darker_mainColor)
+            )
         }
     }
 }
 
 @Composable
-fun ContactRow(icon: ImageVector,text: String){
-    Row(verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(vertical = 6.dp)){
-        Icon(imageVector = icon,
+fun ContactRow(icon: ImageVector, text: String) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(vertical = 6.dp)
+    ) {
+        Icon(
+            imageVector = icon,
             contentDescription = null,
             tint = Color.LightGray,
-            modifier = Modifier.size(20.dp))
+            modifier = Modifier.size(20.dp)
+        )
         Spacer(modifier = Modifier.width(12.dp))
-        Text(text = text ,
+        Text(
+            text = text,
             color = Color.White,
-            fontSize = 14.sp)
+            fontSize = 14.sp
+        )
     }
 
 }

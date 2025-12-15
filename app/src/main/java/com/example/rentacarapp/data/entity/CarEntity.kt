@@ -7,12 +7,12 @@ import java.util.UUID
 
 //Room entity
 @Entity(tableName = "cars_rental")
-data class CarEntity (
-    @PrimaryKey val id :String = UUID.randomUUID().toString(),
-    val make : String,
-    val model : String,
+data class CarEntity(
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
+    val make: String,
+    val model: String,
     @DrawableRes val imageResourceId: Int,
-    val price:Double,
+    val price: Double,
     val date: Long,
     val days: Int
 )

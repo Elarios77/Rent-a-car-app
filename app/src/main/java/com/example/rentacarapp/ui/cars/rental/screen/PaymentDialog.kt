@@ -70,7 +70,8 @@ fun PaymentSheetContent(
     onConfirm: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(24.dp)
+        modifier = Modifier
+            .padding(24.dp)
             .width(IntrinsicSize.Max),
         horizontalAlignment = Alignment.CenterHorizontally
     )

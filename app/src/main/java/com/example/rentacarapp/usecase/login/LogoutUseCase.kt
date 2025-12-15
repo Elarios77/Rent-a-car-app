@@ -6,7 +6,7 @@ import javax.inject.Inject
 class LogoutUseCase @Inject constructor(
     private val userPreferences: UserPreferences
 ) {
-    suspend operator fun invoke(){
+    suspend operator fun invoke() {
         userPreferences.clear()
     }
 }

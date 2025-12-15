@@ -18,37 +18,41 @@ import javax.inject.Inject
 class HistoryViewModel @Inject constructor(
     private val deleteUseCase: RemoveRentalUseCase,
     private val getRentalHistoryUseCase: GetRentalHistoryUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HistoryUiState())
-    val uiState : StateFlow<HistoryUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<HistoryUiState> = _uiState.asStateFlow()
 
-    init{
+    init {
         observeRentals()
     }
 
-    private fun observeRentals(){
+    private fun observeRentals() {
         viewModelScope.launch {
-            getRentalHistoryUseCase().catch {exception ->
-                _uiState.update { it.copy(
-                    isLoading = false,
-                    errorMessage = exception.message
-                ) }
+            getRentalHistoryUseCase().catch { exception ->
+                _uiState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = exception.message
+                    )
+                }
             }.collect { list ->
-                _uiState.update { it.copy(
-                    rentals = list,
-                    isLoading = false,
-                    errorMessage = null
-                ) }
+                _uiState.update {
+                    it.copy(
+                        rentals = list,
+                        isLoading = false,
+                        errorMessage = null
+                    )
+                }
             }
         }
     }
 
-    fun onDeleteClick(car: CarRentItem){
+    fun onDeleteClick(car: CarRentItem) {
         viewModelScope.launch {
-            try{
+            try {
                 deleteUseCase(car)
-            }catch(e: Exception){
+            } catch (e: Exception) {
                 _uiState.update { it.copy(errorMessage = e.message) }
             }
         }

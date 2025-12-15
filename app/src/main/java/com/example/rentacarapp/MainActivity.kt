@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             RentACarAppTheme(darkTheme = false) {
-                    AppNavigation()
+                AppNavigation()
             }
         }
     }

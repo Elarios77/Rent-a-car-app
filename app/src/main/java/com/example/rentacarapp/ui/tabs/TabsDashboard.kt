@@ -1,6 +1,5 @@
 package com.example.rentacarapp.ui.tabs
 
-import android.R.attr.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -87,7 +86,7 @@ fun TabsDashboard(
 fun TabsDashboardContent(
     onLogoutClick: () -> Unit,
     onProfileClick: () -> Unit,
-    onInfoClick: ()-> Unit
+    onInfoClick: () -> Unit
 ) {
     val tabTitles = listOf(TabItem.Main, TabItem.Rent, TabItem.History)
     val pagerState = rememberPagerState { tabTitles.size }
@@ -187,7 +186,7 @@ fun TabsDashboardContent(
 
                         HorizontalDivider()
                         DropdownMenuItem(
-                            text = {Text(text = stringResource(R.string.info))},
+                            text = { Text(text = stringResource(R.string.info)) },
                             onClick = {
                                 isProfileMenuExpanded = false
                                 onInfoClick()

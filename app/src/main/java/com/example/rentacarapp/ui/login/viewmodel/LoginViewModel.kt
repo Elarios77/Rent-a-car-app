@@ -22,59 +22,60 @@ class LoginViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
-    init{
+    init {
         observeSavedCredentials()
     }
 
-    private fun observeSavedCredentials(){
+    private fun observeSavedCredentials() {
         viewModelScope.launch {
             val credentials = userPreferences.readUserPreferences().first()
-                if(credentials !=null){
-                    _uiState.update {
-                        it.copy(
-                            email = credentials.email,
-                            password = credentials.pass,
-                            isCheckboxChecked = true
-                        )
-                    }
+            if (credentials != null) {
+                _uiState.update {
+                    it.copy(
+                        email = credentials.email,
+                        password = credentials.pass,
+                        isCheckboxChecked = true
+                    )
                 }
+            }
         }
     }
-    fun onEmailChanged(newEmail: String){
+
+    fun onEmailChanged(newEmail: String) {
         _uiState.update { it.copy(email = newEmail, errorMessage = null) }
     }
 
-    fun onPasswordChanged(newPassword: String){
+    fun onPasswordChanged(newPassword: String) {
         _uiState.update { it.copy(password = newPassword, errorMessage = null) }
     }
 
-    fun onLoginClicked(){
+    fun onLoginClicked() {
         _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
         viewModelScope.launch {
             val currentEmail = uiState.value.email
             val currentPassword = uiState.value.password
             val isRemember = uiState.value.isCheckboxChecked
-            val result = login(currentEmail,currentPassword)
-            if(result.isSuccess){
-                if(isRemember){
-                    userPreferences.saveUserPreferences(currentEmail,currentPassword)
-                }else{
+            val result = login(currentEmail, currentPassword)
+            if (result.isSuccess) {
+                if (isRemember) {
+                    userPreferences.saveUserPreferences(currentEmail, currentPassword)
+                } else {
                     userPreferences.clear()
                 }
                 _uiState.update { it.copy(isLoading = false, success = true) }
-            }else{
-                val error = result.exceptionOrNull()?.message?:"Error"
+            } else {
+                val error = result.exceptionOrNull()?.message ?: "Error"
                 _uiState.update { it.copy(isLoading = false, errorMessage = error) }
             }
         }
     }
 
-    fun resetLoginState(){
+    fun resetLoginState() {
         _uiState.update { it.copy(success = false) }
     }
 
-    fun onRememberMeChanged(isChecked: Boolean){
+    fun onRememberMeChanged(isChecked: Boolean) {
         _uiState.update { it.copy(isCheckboxChecked = isChecked) }
     }
 }

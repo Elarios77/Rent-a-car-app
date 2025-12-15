@@ -7,18 +7,18 @@ import javax.inject.Inject
 
 class RemoteDataSourceImplementation @Inject constructor(
     private val carApi: CarApiService,
-    private val apiKey:String
-) : RemoteDataSource{
+    private val apiKey: String
+) : RemoteDataSource {
 
     override suspend fun getCarSpecs(make: String, model: String): CarDto? {
-        return try{
-            val response = carApi.getCarDetails(make = make,model=model, apiKey = apiKey)
-            if(response.isSuccessful){
+        return try {
+            val response = carApi.getCarDetails(make = make, model = model, apiKey = apiKey)
+            if (response.isSuccessful) {
                 response.body()?.firstOrNull()
-            }else{
+            } else {
                 null
             }
-        }catch(e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
             null
         }

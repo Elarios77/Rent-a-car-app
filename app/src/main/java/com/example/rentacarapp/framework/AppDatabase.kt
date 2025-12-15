@@ -7,9 +7,9 @@ import com.example.rentacarapp.framework.dao.CarDao
 
 
 @Database(
-entities = [CarEntity::class],
+    entities = [CarEntity::class],
     version = 1
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun carDao(): CarDao
 }

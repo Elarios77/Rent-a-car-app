@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class CarEntityMapper @Inject constructor() {
 
-    operator fun invoke(entity: CarEntity?): CarRentItem?{
-        if(entity==null)return null
+    operator fun invoke(entity: CarEntity?): CarRentItem? {
+        if (entity == null) return null
         return CarRentItem(
             id = entity.id,
             make = entity.make,
@@ -22,14 +22,14 @@ class CarEntityMapper @Inject constructor() {
     }
 
     //Reverse Mapping
-    operator fun invoke(item: CarRentItem,days: Int=0): CarEntity{
+    operator fun invoke(item: CarRentItem, days: Int = 0): CarEntity {
         return CarEntity(
             id = item.id,
             make = item.make,
             model = item.model,
             imageResourceId = item.imageResourceId,
-            price =item.price*days,
-            date = item.date?: System.currentTimeMillis(),
+            price = item.price * days,
+            date = item.date ?: System.currentTimeMillis(),
             days = item.rentDays
         )
     }

@@ -18,7 +18,7 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase{
+    fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase {
         return Room.databaseBuilder(
             context,
             klass = AppDatabase::class.java,
@@ -27,7 +27,7 @@ object DatabaseModule {
     }
 
     @Provides
-    fun provideCarDao(database: AppDatabase): CarDao{
+    fun provideCarDao(database: AppDatabase): CarDao {
         return database.carDao()
     }
 }

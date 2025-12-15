@@ -59,63 +59,75 @@ fun CarItemCard(
     isExpanded: Boolean,
     selectedDays: Int,
     currentTotalCost: Double,
-    isRentButtonEnabled:Boolean,
+    isRentButtonEnabled: Boolean,
     onExpandClick: () -> Unit,
     onDateClick: () -> Unit,
     onRentClick: () -> Unit
 ) {
 
     val rotationState by animateFloatAsState(
-        targetValue = if(isExpanded)180f else 0f,
+        targetValue = if (isExpanded) 180f else 0f,
         label = "ArrowRotation"
     )
 
-    Card(modifier = Modifier.fillMaxWidth()
-        .padding(horizontal = 16.dp, vertical = 8.dp)
-        .animateContentSize(),
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .animateContentSize(),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.LightGray),
         elevation = CardDefaults.cardElevation(4.dp),
         onClick = onExpandClick
     )
     {
-        Column(modifier = Modifier.padding(12.dp)){
-            Row(verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.fillMaxWidth())
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            )
             {
-                Image(painter = painterResource(id = car.imageResourceId),
+                Image(
+                    painter = painterResource(id = car.imageResourceId),
                     contentDescription = car.model,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier.width(150.dp)
+                    modifier = Modifier
+                        .width(150.dp)
                         .height(90.dp)
-                        .clip(RoundedCornerShape(12.dp)))
+                        .clip(RoundedCornerShape(12.dp))
+                )
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(text = car.make,
+                    Text(
+                        text = car.make,
                         fontSize = 14.sp,
                         color = Color.DarkGray,
-                        fontWeight = FontWeight.SemiBold)
-                    Text(text = car.model,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Text(
+                        text = car.model,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black)
+                        color = Color.Black
+                    )
                 }
             }
 
-            Column(horizontalAlignment = Alignment.End){
+            Column(horizontalAlignment = Alignment.End) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowDown,
                     contentDescription = null,
-                    modifier= Modifier.size(24.dp)
+                    modifier = Modifier
+                        .size(24.dp)
                         .rotate(rotationState),
                     tint = Color.Gray
                 )
             }
         }
 
-        if(isExpanded) {
+        if (isExpanded) {
             Spacer(modifier = Modifier.height(12.dp))
             HorizontalDivider(color = Color.LightGray.copy(alpha = 0.5f))
             Spacer(modifier = Modifier.height(12.dp))
@@ -144,79 +156,86 @@ fun CarItemCard(
             }
         }
 
-            Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
-            OutlinedButton(
-                onClick = onDateClick,
-                modifier = Modifier.fillMaxWidth(),
+        OutlinedButton(
+            onClick = onDateClick,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Icon(
+                Icons.Default.DateRange,
+                contentDescription = null,
+                tint = Color.DarkGray
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "$selectedDays Days Selected (Tap to change)",
+                color = Color.DarkGray,
+                fontWeight = FontWeight.SemiBold
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                Text(
+                    text = stringResource(R.string.totalPrice),
+                    fontSize = 12.sp,
+                    color = Color.DarkGray
+                )
+                Text(
+                    text = "${currentTotalCost.toInt()}€",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    color = colorResource(R.color.darker_mainColor)
+                )
+            }
+            Button(
+                enabled = isRentButtonEnabled,
+                onClick = onRentClick,
+                colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.mainColor)),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Icon(
-                    Icons.Default.DateRange,
-                    contentDescription = null,
-                    tint = Color.DarkGray
-                )
-                Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "$selectedDays Days Selected (Tap to change)",
-                    color = Color.DarkGray,
-                    fontWeight = FontWeight.SemiBold
+                    text = stringResource(R.string.rentNow),
+                    fontWeight = FontWeight.Bold
                 )
             }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Column {
-                    Text(
-                        text = stringResource(R.string.totalPrice),
-                        fontSize = 12.sp,
-                        color = Color.DarkGray
-                    )
-                    Text(
-                        text = "${currentTotalCost.toInt()}€",
-                        fontSize = 22.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                        color = colorResource(R.color.darker_mainColor)
-                    )
-                }
-                Button(
-                    enabled = isRentButtonEnabled,
-                    onClick = onRentClick,
-                    colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.mainColor)),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.rentNow),
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
+        }
 
     }
 }
 
 @Composable
-fun SpecItem(icon: ImageVector,text:String){
-    Column(horizontalAlignment = Alignment.CenterHorizontally){
-        Icon(imageVector = icon,contentDescription = null,
-            tint = Color.DarkGray,modifier = Modifier.size(20.dp))
+fun SpecItem(icon: ImageVector, text: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Icon(
+            imageVector = icon, contentDescription = null,
+            tint = Color.DarkGray, modifier = Modifier.size(20.dp)
+        )
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = text, fontSize = 12.sp, fontWeight = FontWeight.SemiBold,color = Color.DarkGray)
+        Text(
+            text = text,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.SemiBold,
+            color = Color.DarkGray
+        )
     }
 }
 
 @Preview
 @Composable
-fun CarItemPreview(){
-    MaterialTheme{
+fun CarItemPreview() {
+    MaterialTheme {
         CarItemCard(
             car = CarRentItem(
-                id= "1",make = "Audi",model="A3",
+                id = "1", make = "Audi", model = "A3",
                 imageResourceId = R.drawable.rsq8,
                 price = 50.0,
                 year = 2020,
@@ -239,35 +258,46 @@ fun CarItemPreview(){
 @Composable
 fun CarItemSmallCard(
     car: CarRentItem,
-    onClick:()-> Unit
-){
-    Card(modifier = Modifier.width(160.dp)
-        .padding(8.dp)
-        .clickable{onClick()},
+    onClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier
+            .width(160.dp)
+            .padding(8.dp)
+            .clickable { onClick() },
         elevation = CardDefaults.cardElevation(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White),
-        shape = RoundedCornerShape(12.dp))
+        shape = RoundedCornerShape(12.dp)
+    )
     {
         Column(horizontalAlignment = Alignment.CenterHorizontally)
         {
-            Image(painter = painterResource(id = car.imageResourceId),
+            Image(
+                painter = painterResource(id = car.imageResourceId),
                 contentDescription = car.model,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
-                    .height(100.dp))
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+            )
             Column(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .padding(8.dp)
             ) {
-                Text(text = car.make,
+                Text(
+                    text = car.make,
                     fontSize = 12.sp,
-                    color = Color.Gray)
-                Text(text = car.model,
+                    color = Color.Gray
+                )
+                Text(
+                    text = car.model,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color.Gray)
+                    color = Color.Gray
+                )
 
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -284,7 +314,7 @@ fun CarItemSmallCard(
 
 @Preview(showBackground = true)
 @Composable
-fun CarItemSmallCardPreview(){
+fun CarItemSmallCardPreview() {
     val mockCar = CarRentItem(
         make = "Toyota",
         model = "Yaris",
@@ -292,7 +322,7 @@ fun CarItemSmallCardPreview(){
         price = 45.0,
         category = CarCategory.SMALL
     )
-    Box(modifier = Modifier.padding(16.dp)){
+    Box(modifier = Modifier.padding(16.dp)) {
         CarItemSmallCard(
             car = mockCar,
             onClick = {}
