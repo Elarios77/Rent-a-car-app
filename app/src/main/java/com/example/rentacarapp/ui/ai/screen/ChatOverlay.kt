@@ -61,6 +61,7 @@ fun ChatOverlay(
     viewModel: MainViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
     ChatOverlayContent(
         uiState = uiState,
         onToggleChat = { viewModel.toggleChat() },

@@ -1,5 +1,6 @@
 package com.example.rentacarapp.di.modules
 
+import android.util.Log
 import com.example.rentacarapp.BuildConfig
 import com.example.rentacarapp.framework.api.CarApiService
 import com.google.ai.client.generativeai.GenerativeModel
@@ -64,10 +65,15 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideGenerativeModel(): GenerativeModel {
+    fun provideGenerativeModel(): GenerativeModel?{
+        val apiKey = BuildConfig.GEMINI_API_KEY
+        if(apiKey.isNullOrEmpty() || apiKey.startsWith("YOUR_")){
+            Log.e("GeminiModule","Gemini API key is missing or invalid.Chatbot will be disabled")
+            return null
+        }
         return GenerativeModel(
             modelName = "gemini-2.5-flash",
-            apiKey = BuildConfig.GEMINI_API_KEY
+            apiKey = apiKey
         )
     }
 }

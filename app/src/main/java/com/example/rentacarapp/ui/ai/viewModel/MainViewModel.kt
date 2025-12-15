@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val generativeModel: GenerativeModel
+    private val generativeModel: GenerativeModel?
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AiChatUiState())
@@ -30,13 +30,23 @@ class MainViewModel @Inject constructor(
     }
 
     fun sendMessage(msgText: String) {
+        clearError()
+        if(generativeModel == null){
+            _uiState.update { current ->
+                current.copy(
+                    isLoading = false,
+                    messages = current.messages + ChatMessage("Error api key is missind. Please generate a free key and configure local.properties.",false)
+                )
+            }
+            return
+        }
         if (msgText.isBlank()) return
 
         _uiState.update { currentState ->
             val userMsgText = ChatMessage(text = msgText, isUser = true)
             currentState.copy(
                 messages = currentState.messages + userMsgText,
-                isLoading = false,
+                isLoading = true,
                 error = null
             )
         }
