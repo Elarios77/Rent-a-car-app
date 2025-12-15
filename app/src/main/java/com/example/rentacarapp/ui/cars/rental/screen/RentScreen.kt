@@ -53,13 +53,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.rentacarapp.R
 import com.example.rentacarapp.domain.model.CarCategory
 import com.example.rentacarapp.domain.model.CarRentItem
+import com.example.rentacarapp.ui.ai.screen.ChatOverlay
+import com.example.rentacarapp.ui.ai.viewModel.MainViewModel
 import com.example.rentacarapp.ui.cars.rental.viewmodel.RentViewModel
 import com.example.rentacarapp.ui.reusablecomponents.CustomFooter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RentScreen(
-    viewModel: RentViewModel = hiltViewModel()
+    viewModel: RentViewModel = hiltViewModel(),
+    chatViewModel: MainViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -74,72 +77,76 @@ fun RentScreen(
             viewModel.resetMessages()
         }
     }
+    Box(modifier = Modifier.fillMaxSize()) {
 
-    if (uiState.isPaymentSheetVisible) {
-        PaymentDialog(
-            totalAmount = uiState.currentTotalCost,
-            isProcessing = uiState.isPaymentProcessing,
-            onDismiss = { viewModel.onDismissPayment() },
-            onConfirm = { viewModel.onConfirmPayment() }
-        )
-    }
-
-    DatePickerPopUp(
-        isVisible = uiState.isDatePickerVisible,
-        dateSelectionStart = uiState.dateSelectionStart,
-        dateSelectionEnd = uiState.dateSelectionEnd,
-        onConfirm = { start, end -> viewModel.onDaysSelected(start, end) },
-        onDismiss = { viewModel.toggleDatePicker(false) }
-    )
-
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(colorResource(R.color.mainColor))
-    ) {
-        LazyColumn(contentPadding = PaddingValues(bottom = 80.dp, top = 16.dp))
-        {
-            items(uiState.groupedCars.entries.toList()) { entry ->
-                val category = entry.key
-                val carsInCategory = entry.value
-                CategorySelection(
-                    category = category!!,
-                    cars = carsInCategory,
-                    isExpanded = uiState.expandedCategories.contains(category),
-                    onToggle = { viewModel.onToggleCategory(category) },
-                    onCarClick = { car ->
-                        viewModel.selectCarForDetails(car)
-                    }
-                )
-            }
+        if (uiState.isPaymentSheetVisible) {
+            PaymentDialog(
+                totalAmount = uiState.currentTotalCost,
+                isProcessing = uiState.isPaymentProcessing,
+                onDismiss = { viewModel.onDismissPayment() },
+                onConfirm = { viewModel.onConfirmPayment() }
+            )
         }
-        if (uiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-        }
-        CustomFooter(color = Color.Gray)
-    }
-    if (uiState.selectedCarForDetails != null) {
 
-        var isSpecsExpanded by rememberSaveable { mutableStateOf(false) }
-        ModalBottomSheet(
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
-            onDismissRequest = { viewModel.closeCarDetails() },
-            content = {
-                val selectedCar = uiState.selectedCarForDetails!!
-                val isButtonEnabled = uiState.dateSelectionStart !=null && !uiState.isPaymentProcessing
-                CarItemCard(
-                    car = selectedCar,
-                    isExpanded = isSpecsExpanded,
-                    selectedDays = uiState.selectedDays,
-                    currentTotalCost = uiState.currentTotalCost,
-                    onExpandClick = { isSpecsExpanded = !isSpecsExpanded },
-                    onDateClick = { viewModel.toggleDatePicker(true) },
-                    onRentClick = { viewModel.onRentClick() },
-                    isRentButtonEnabled = isButtonEnabled
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-            }
+        DatePickerPopUp(
+            isVisible = uiState.isDatePickerVisible,
+            dateSelectionStart = uiState.dateSelectionStart,
+            dateSelectionEnd = uiState.dateSelectionEnd,
+            onConfirm = { start, end -> viewModel.onDaysSelected(start, end) },
+            onDismiss = { viewModel.toggleDatePicker(false) }
         )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorResource(R.color.mainColor))
+        ) {
+            LazyColumn(contentPadding = PaddingValues(bottom = 80.dp, top = 16.dp))
+            {
+                items(uiState.groupedCars.entries.toList()) { entry ->
+                    val category = entry.key
+                    val carsInCategory = entry.value
+                    CategorySelection(
+                        category = category!!,
+                        cars = carsInCategory,
+                        isExpanded = uiState.expandedCategories.contains(category),
+                        onToggle = { viewModel.onToggleCategory(category) },
+                        onCarClick = { car ->
+                            viewModel.selectCarForDetails(car)
+                        }
+                    )
+                }
+            }
+            if (uiState.isLoading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+            CustomFooter(color = Color.Gray)
+        }
+        if (uiState.selectedCarForDetails != null) {
+
+            var isSpecsExpanded by rememberSaveable { mutableStateOf(false) }
+            ModalBottomSheet(
+                sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+                onDismissRequest = { viewModel.closeCarDetails() },
+                content = {
+                    val selectedCar = uiState.selectedCarForDetails!!
+                    val isButtonEnabled =
+                        uiState.dateSelectionStart != null && !uiState.isPaymentProcessing
+                    CarItemCard(
+                        car = selectedCar,
+                        isExpanded = isSpecsExpanded,
+                        selectedDays = uiState.selectedDays,
+                        currentTotalCost = uiState.currentTotalCost,
+                        onExpandClick = { isSpecsExpanded = !isSpecsExpanded },
+                        onDateClick = { viewModel.toggleDatePicker(true) },
+                        onRentClick = { viewModel.onRentClick() },
+                        isRentButtonEnabled = isButtonEnabled
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                }
+            )
+        }
+        ChatOverlay(viewModel = chatViewModel)
     }
 }
 

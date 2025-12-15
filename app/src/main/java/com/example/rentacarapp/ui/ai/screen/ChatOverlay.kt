@@ -100,7 +100,7 @@ fun ChatOverlayContent(
         FloatingActionButton(
             onClick = onToggleChat,
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             shape = CircleShape,
             modifier = Modifier
                 .align(Alignment.BottomStart)
